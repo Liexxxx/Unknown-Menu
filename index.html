@@ -11,13 +11,14 @@
     .constellation-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 30% 40%,#1a1a1a 0%,#0a0a0a 100%)}
     .star{position:absolute;width:4px;height:4px;background:#b0b0b0;border-radius:50%;box-shadow:0 0 8px rgba(200,200,200,.3);animation:twinkle 3s infinite alternate ease-in-out}
     @keyframes twinkle{0%{opacity:.2;transform:scale(.9)}100%{opacity:1;transform:scale(1.2)}}
-    .key-card{position:relative;z-index:10;width:100%;max-width:760px;background:#232323;border-radius:2.5rem;padding:2.8rem 2.5rem 3rem;box-shadow:0 20px 40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);backdrop-filter:blur(2px);border:1px solid #3a3a3a}
+    .key-card{position:relative;z-index:10;width:100%;max-width:760px;background:#232323;border-radius:2.5rem;padding:2.8rem 2.5rem 3rem;box-shadow:0 20px 40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);backdrop-filter:blur(2px);border:1px solid #3a3a3a;transition:border-color .3s}
     .key-card:hover{border-color:#4a4a4a}
     .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem 1rem}
     .card-header h2{font-weight:500;font-size:1.2rem;color:#ddd;background:#1a1a1a;padding:.4rem 1.2rem;border-radius:40px;border:1px solid #3d3d3d;display:inline-flex;align-items:center;gap:10px}
     .badge-24h{background:#1a1a1a;color:#eaeaea;padding:.3rem 1.2rem;border-radius:40px;font-size:.85rem;border:1px solid #3f3f3f}
     .key-display{background:#151515;border-radius:2rem;padding:1.2rem 1.8rem;margin:1.8rem 0 2.2rem;border:1px solid #3a3a3a;box-shadow:inset 0 6px 10px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
-    .key-value{font-family:'SF Mono','Fira Code',monospace;font-size:1.8rem;font-weight:500;letter-spacing:1.5px;color:#f0f0f0;background:#0e0e0e;padding:.3rem 1.2rem;border-radius:60px;border:1px solid #333;flex:1;min-width:180px;word-break:break-all;cursor:pointer}
+    .key-value{font-family:'SF Mono','Fira Code',monospace;font-size:1.8rem;font-weight:500;letter-spacing:1.5px;color:#f0f0f0;background:#0e0e0e;padding:.3rem 1.2rem;border-radius:60px;border:1px solid #333;flex:1;min-width:180px;word-break:break-all;cursor:pointer;transition:all .2s}
+    .key-value:hover{background:#1a1a1a;border-color:#555}
     .copy-btn{background:#2b2b2b;border:none;color:#f0f0f0;width:54px;height:54px;border-radius:60px;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;border:1px solid #444;box-shadow:0 4px 0 #111,0 6px 12px rgba(0,0,0,.6);flex-shrink:0}
     .copy-btn:hover{background:#363636;transform:translateY(-2px)}
     .copy-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #111}
@@ -25,22 +26,31 @@
     .copy-btn.copied i{color:#8bc34a}
     .action-area{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem .8rem;margin-top:.8rem}
     .generate-btn{background:#2a2a2a;border:none;padding:.9rem 2.5rem;border-radius:60px;font-weight:500;font-size:1.1rem;color:#ececec;border:1px solid #3f3f3f;box-shadow:0 5px 0 #131313,0 6px 12px rgba(0,0,0,.5);cursor:pointer;display:inline-flex;align-items:center;gap:12px;transition:.12s}
-    .generate-btn:hover{background:#333;transform:translateY(-2px)}
+    .generate-btn:hover{background:#333;transform:translateY(-2px);border-color:#555}
     .generate-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #131313}
     .generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:0 5px 0 #131313}
     .info-hint{color:#9a9a9a;font-size:.85rem;background:#1a1a1a;padding:.3rem 1.2rem;border-radius:30px;border:1px solid #333}
     .verify-section{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
-    .verify-section input{flex:1;min-width:160px;background:#151515;border:1px solid #3a3a3a;border-radius:40px;padding:.7rem 1.2rem;color:#eee;font-size:.95rem;outline:none;font-family:'SF Mono',monospace;letter-spacing:.5px}
-    .verify-section input:focus{border-color:#5a5a5a}
+    .verify-section input{flex:1;min-width:160px;background:#151515;border:1px solid #3a3a3a;border-radius:40px;padding:.7rem 1.2rem;color:#eee;font-size:.95rem;outline:none;font-family:'SF Mono',monospace;letter-spacing:.5px;transition:border-color .2s}
+    .verify-section input:focus{border-color:#5a8a5a}
+    .verify-section input::placeholder{color:#555}
     .verify-btn{background:#1e3a3a;border:none;padding:.7rem 1.8rem;border-radius:40px;color:#b0e0e0;font-weight:500;border:1px solid #2a5a5a;cursor:pointer;transition:.12s;box-shadow:0 3px 0 #0a2a2a}
-    .verify-btn:hover{background:#2a4a4a;transform:translateY(-2px)}
+    .verify-btn:hover{background:#2a4a4a;transform:translateY(-2px);border-color:#3a6a6a}
     .verify-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0a2a2a}
-    .result-box{margin-top:1rem;padding:.8rem 1.2rem;border-radius:16px;background:#1a1a1a;border:1px solid #333;color:#ccc;font-size:.95rem;display:none;word-break:break-all}
+    .verify-btn.redeem{background:#2a2a3a;border-color:#3a3a5a;box-shadow:0 3px 0 #1a1a2a}
+    .verify-btn.redeem:hover{background:#3a3a4a;border-color:#4a4a6a}
+    .result-box{margin-top:1rem;padding:.8rem 1.2rem;border-radius:16px;background:#1a1a1a;border:1px solid #333;color:#ccc;font-size:.95rem;display:none;word-break:break-all;white-space:pre-line}
     .result-box.visible{display:block}
     .result-box.valid{border-color:#2a6a2a;background:#1a2a1a;color:#8bc34a}
     .result-box.invalid{border-color:#6a2a2a;background:#2a1a1a;color:#e57373}
+    .result-box.error{border-color:#6a4a2a;background:#2a1a1a;color:#e5a373}
+    .result-box.loading{border-color:#4a4a6a;background:#1a1a2a;color:#aab0d0}
     .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1f1f1f;color:#e0e0e0;padding:.9rem 2rem;border-radius:60px;border:1px solid #444;box-shadow:0 8px 30px rgba(0,0,0,.8);z-index:999;transition:opacity .25s,transform .2s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px}
     .toast.show{opacity:1;pointer-events:auto}
+    .toast i{font-size:1.1rem}
+    .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+    .status-dot.online{background:#4caf50;box-shadow:0 0 8px #4caf5066}
+    .status-dot.offline{background:#f44336;box-shadow:0 0 8px #f4433666}
     @media(max-width:550px){.key-card{padding:1.8rem 1.2rem}.key-value{font-size:1.3rem;padding:.2rem .8rem}.copy-btn{width:48px;height:48px;font-size:1.3rem}.generate-btn{padding:.7rem 1.6rem;font-size:1rem}}
   </style>
 </head>
@@ -64,23 +74,28 @@
       <button class="generate-btn" id="generateBtn">
         <i class="fas fa-sync-alt"></i> Generate 24h key
       </button>
-      <span class="info-hint"><i class="fas fa-asterisk" style="font-size:.6rem"></i> discord·bot</span>
+      <span class="info-hint">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">bot</span>
+      </span>
     </div>
 
     <div class="verify-section">
       <input type="text" id="verifyInput" placeholder="Enter key to verify..." spellcheck="false" />
       <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> Verify</button>
-      <button class="verify-btn" id="redeemBtn" style="background:#2a2a3a;border-color:#3a3a5a"><i class="fas fa-link"></i> Redeem</button>
+      <button class="verify-btn redeem" id="redeemBtn"><i class="fas fa-link"></i> Redeem</button>
     </div>
     <div class="result-box" id="resultBox"></div>
   </div>
 
-  <div id="toast" class="toast"><i class="fas fa-check-circle" style="color:#8bc34a"></i> <span id="toastMessage">Copied!</span></div>
+  <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">Copied!</span></div>
 
   <script>
     (function(){
+      // ===== YOUR RAILWAY URL =====
       var API_BASE = 'https://my-discord-bot-weathered-cherry-6777-production.up.railway.app';
       
+      // ===== DOM ELEMENTS =====
       var bg = document.getElementById('constellationBg');
       for(var i=0;i<50;i++){var star=document.createElement('div');star.className='star';star.style.top=Math.random()*100+'%';star.style.left=Math.random()*100+'%';star.style.animationDelay=Math.random()*5+'s';star.style.width=Math.random()*4+1+'px';star.style.height=star.style.width;bg.appendChild(star)}
       
@@ -89,84 +104,40 @@
       var copyBtn = document.getElementById('copyBtn');
       var toast = document.getElementById('toast');
       var toastMsg = document.getElementById('toastMessage');
+      var toastIcon = toast.querySelector('i');
       var verifyInput = document.getElementById('verifyInput');
       var verifyBtn = document.getElementById('verifyBtn');
       var redeemBtn = document.getElementById('redeemBtn');
       var resultBox = document.getElementById('resultBox');
+      var statusDot = document.getElementById('statusDot');
+      var statusText = document.getElementById('statusText');
       
       var currentKey = '';
+      var isConnected = false;
 
-      async function generateKey() {
-        generateBtn.disabled = true;
-        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-
-        try {
-          var res = await fetch(API_BASE + '/generatekey?hours=24');
-          var data = await res.json();
-
-          if (!res.ok || data.error) {
-            throw new Error(data.error || 'Generation failed');
-          }
-
-          currentKey = data.key;
-          keyDisplay.textContent = currentKey;
-          showToast('✅ Key generated successfully!');
-        } catch (err) {
-          showToast('❌ ' + err.message);
-          keyDisplay.textContent = '⚠️ Error';
-        }
-
-        generateBtn.disabled = false;
-        generateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Generate 24h key';
-      }
-
-      async function verifyKey(key) {
-        try {
-          var res = await fetch(API_BASE + '/verifykey', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ key: key.trim() })
-          });
-          return await res.json();
-        } catch {
-          return { valid: false, reason: 'Network error' };
-        }
-      }
-
-      async function redeemKey(key) {
-        try {
-          var userId = prompt('Enter your Discord User ID (for redemption):');
-          if (!userId) return { success: false, reason: 'Cancelled' };
-
-          var res = await fetch(API_BASE + '/redeemkey', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ key: key.trim(), discord_user_id: userId.trim() })
-          });
-          return await res.json();
-        } catch {
-          return { success: false, reason: 'Network error' };
-        }
-      }
-
-      function showResult(message, isValid) {
+      // ===== UI HELPERS =====
+      function showResult(message, type) {
         resultBox.textContent = message;
         resultBox.classList.add('visible');
         resultBox.className = 'result-box visible';
-        if (isValid === true) resultBox.classList.add('valid');
-        else if (isValid === false) resultBox.classList.add('invalid');
+        if (type === 'valid') resultBox.classList.add('valid');
+        else if (type === 'invalid') resultBox.classList.add('invalid');
+        else if (type === 'error') resultBox.classList.add('error');
+        else if (type === 'loading') resultBox.classList.add('loading');
       }
 
-      function showToast(msg) {
+      function showToast(msg, isError) {
         toastMsg.textContent = msg;
+        toastIcon.className = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+        toastIcon.style.color = isError ? '#e57373' : '#8bc34a';
         toast.classList.add('show');
         clearTimeout(toast._timer);
-        toast._timer = setTimeout(function(){ toast.classList.remove('show'); }, 3000);
+        toast._timer = setTimeout(function(){ toast.classList.remove('show'); }, 4000);
       }
 
       function copyKey() {
         if (!currentKey || currentKey === '··········') {
-          showToast('⚠️ Generate a key first!');
+          showToast('⚠️ Generate a key first!', true);
           return;
         }
         navigator.clipboard.writeText(currentKey).then(function(){
@@ -177,39 +148,145 @@
             copyBtn.classList.remove('copied');
             copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
           }, 2500);
-        }).catch(function(){ showToast('❌ Failed to copy'); });
+        }).catch(function(){ showToast('❌ Failed to copy', true); });
       }
 
+      function updateStatus(online) {
+        isConnected = online;
+        statusDot.className = 'status-dot ' + (online ? 'online' : 'offline');
+        statusText.textContent = online ? 'online' : 'offline';
+        statusText.style.color = online ? '#8bc34a' : '#e57373';
+      }
+
+      // ===== GENERATE KEY =====
+      async function generateKey() {
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+        showResult('⏳ Generating key...', 'loading');
+
+        try {
+          var res = await fetch(API_BASE + '/generatekey?hours=24', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+
+          if (!res.ok) {
+            if (res.status === 403) throw new Error('Access denied. Check CORS.');
+            if (res.status === 404) throw new Error('Endpoint not found.');
+            throw new Error('Server error: ' + res.status);
+          }
+
+          var data = await res.json();
+          
+          if (data.error) throw new Error(data.error);
+
+          currentKey = data.key;
+          keyDisplay.textContent = currentKey;
+          var expires = new Date(data.expires_at);
+          showResult('✅ Key generated!\n\nKey: ' + data.key + '\nExpires: ' + expires.toLocaleString(), 'valid');
+          showToast('✅ Key generated!');
+          updateStatus(true);
+
+        } catch (err) {
+          showResult('❌ Error: ' + err.message, 'error');
+          showToast('❌ ' + err.message, true);
+          keyDisplay.textContent = '⚠️ Error';
+          updateStatus(false);
+        }
+
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Generate 24h key';
+      }
+
+      // ===== VERIFY KEY =====
+      async function verifyKey(key) {
+        try {
+          var res = await fetch(API_BASE + '/verifykey', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: key.trim() })
+          });
+          
+          if (!res.ok) throw new Error('Server error: ' + res.status);
+          return await res.json();
+        } catch (err) {
+          return { valid: false, reason: 'Connection error: ' + err.message };
+        }
+      }
+
+      // ===== REDEEM KEY =====
+      async function redeemKey(key) {
+        try {
+          var userId = prompt('Enter your Discord User ID (for redemption):');
+          if (!userId) return { success: false, reason: 'Cancelled' };
+
+          var res = await fetch(API_BASE + '/redeemkey', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: key.trim(), discord_user_id: userId.trim() })
+          });
+          
+          if (!res.ok) throw new Error('Server error: ' + res.status);
+          return await res.json();
+        } catch (err) {
+          return { success: false, reason: 'Connection error: ' + err.message };
+        }
+      }
+
+      // ===== EVENT LISTENERS =====
       generateBtn.addEventListener('click', generateKey);
       copyBtn.addEventListener('click', copyKey);
       keyDisplay.addEventListener('click', copyKey);
 
       verifyBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
-        if (!key) { showResult('Please enter a key to verify.', null); return; }
+        if (!key) { showResult('Please enter a key to verify.', 'error'); return; }
 
+        showResult('⏳ Verifying key...', 'loading');
         var result = await verifyKey(key);
+        
         if (result.valid) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult('✅ Valid key!\nExpires: ' + expires.toLocaleString() + '\nCreated by: ' + (result.keyData.createdBy || 'Unknown'), true);
+          showResult(
+            '✅ Valid key!\n\n' +
+            'Key: ' + key + '\n' +
+            'Expires: ' + expires.toLocaleString() + '\n' +
+            'Created by: ' + (result.keyData.createdBy || 'Unknown') + '\n' +
+            'Status: Available to redeem',
+            'valid'
+          );
+          showToast('✅ Key is valid!');
+          updateStatus(true);
         } else {
-          showResult('❌ Invalid key: ' + result.reason, false);
+          showResult('❌ Invalid key: ' + result.reason, 'invalid');
+          showToast('❌ ' + result.reason, true);
         }
       });
 
       redeemBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
-        if (!key) { showResult('Please enter a key to redeem.', null); return; }
+        if (!key) { showResult('Please enter a key to redeem.', 'error'); return; }
 
+        showResult('⏳ Redeeming key...', 'loading');
         var result = await redeemKey(key);
+        
         if (result.success) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult('✅ Key redeemed successfully!\nLocked to your Discord account until ' + expires.toLocaleString(), true);
+          showResult(
+            '✅ Key redeemed!\n\n' +
+            'Key: ' + key + '\n' +
+            'Locked to: Your Discord Account\n' +
+            'Expires: ' + expires.toLocaleString(),
+            'valid'
+          );
           currentKey = key;
           keyDisplay.textContent = key;
-          copyKey();
+          showToast('✅ Key redeemed!');
+          updateStatus(true);
+          setTimeout(copyKey, 500);
         } else {
-          showResult('❌ Redemption failed: ' + result.reason, false);
+          showResult('❌ Redemption failed: ' + result.reason, 'invalid');
+          showToast('❌ ' + result.reason, true);
         }
       });
 
@@ -217,7 +294,47 @@
         if (e.key === 'Enter') verifyBtn.click();
       });
 
+      // ===== TEST CONNECTION =====
+      async function testConnection() {
+        try {
+          var res = await fetch(API_BASE + '/health', { 
+            method: 'GET',
+            signal: AbortSignal.timeout(5000)
+          });
+          
+          if (res.ok) {
+            updateStatus(true);
+            console.log('✅ Connected to bot at:', API_BASE);
+            showResult('✅ Connected to bot! Ready to generate keys.', 'valid');
+            setTimeout(function(){ 
+              if (resultBox.classList.contains('visible')) {
+                resultBox.classList.remove('visible');
+              }
+            }, 3000);
+          } else {
+            updateStatus(false);
+            showResult('⚠️ Bot responded but returned status: ' + res.status, 'error');
+          }
+        } catch (err) {
+          updateStatus(false);
+          console.warn('⚠️ Cannot connect to bot:', err.message);
+          showResult(
+            '⚠️ Cannot connect to bot\n\n' +
+            'URL: ' + API_BASE + '\n' +
+            'Error: ' + err.message + '\n\n' +
+            'Try:\n' +
+            '1. Make sure bot is running on Railway\n' +
+            '2. Check if CORS is enabled on the bot\n' +
+            '3. Verify the URL is correct',
+            'error'
+          );
+        }
+      }
+
+      // ===== INIT =====
+      testConnection();
       console.log('🔑 KeyForge ready · API:', API_BASE);
+      console.log('ℹ️  Status:', isConnected ? 'Connected' : 'Disconnected');
     })();
   </script>
 </body>
