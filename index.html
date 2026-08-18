@@ -1,515 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KeyForge · 24h Discord key</title>
-  <!-- Font Awesome for copy icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KeyForge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #161616;  /* dark base */
-      padding: 1.5rem;
-      position: relative;
-    }
-
-    /* ---- constellation animated background (dark grey / dark dark grey) ---- */
-    .constellation-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background: radial-gradient(circle at 30% 40%, #1f1f1f 0%, #0e0e0e 100%);
-    }
-
-    .star {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #b0b0b0;
-      border-radius: 50%;
-      box-shadow: 0 0 8px rgba(200, 200, 200, 0.3);
-      animation: twinkle 3s infinite alternate ease-in-out;
-    }
-
-    /* generate multiple stars via JS (or we can add them inline) – we'll add a few fixed + JS for more */
-    .star:nth-child(1) { top: 12%; left: 8%; animation-delay: 0s; }
-    .star:nth-child(2) { top: 25%; left: 78%; animation-delay: 0.8s; width: 6px; height: 6px; }
-    .star:nth-child(3) { top: 55%; left: 15%; animation-delay: 1.6s; }
-    .star:nth-child(4) { top: 70%; left: 88%; animation-delay: 0.3s; width: 5px; height: 5px; }
-    .star:nth-child(5) { top: 40%; left: 45%; animation-delay: 2.1s; }
-    .star:nth-child(6) { top: 85%; left: 30%; animation-delay: 0.9s; }
-    .star:nth-child(7) { top: 15%; left: 55%; animation-delay: 1.2s; width: 3px; height: 3px; }
-    .star:nth-child(8) { top: 65%; left: 68%; animation-delay: 1.8s; }
-    .star:nth-child(9) { top: 92%; left: 72%; animation-delay: 0.5s; }
-    .star:nth-child(10) { top: 33%; left: 92%; animation-delay: 2.5s; }
-
-    /* additional small stars (glints) */
-    .star.small {
-      width: 2px;
-      height: 2px;
-      background: #aaa;
-      box-shadow: 0 0 4px #ccc;
-    }
-
-    @keyframes twinkle {
-      0% { opacity: 0.2; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
-
-    /* ---- connecting lines (constellation effect) ---- */
-    .line {
-      position: absolute;
-      background: rgba(180, 180, 180, 0.15);
-      height: 1px;
-      transform-origin: 0 0;
-      pointer-events: none;
-      border-radius: 2px;
-    }
-
-    /* main card – dark grey / dark dark grey + white */
-    .key-card {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 720px;
-      background: #252525;   /* dark grey */
-      border-radius: 2.5rem;
-      padding: 2.8rem 2.5rem 3rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(2px);
-      transition: all 0.2s ease;
-      border: 1px solid #3a3a3a;
-    }
-
-    .key-card:hover {
-      border-color: #4a4a4a;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.9);
-    }
-
-    /* header */
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 0.75rem 1rem;
-    }
-
-    .card-header h2 {
-      font-weight: 500;
-      font-size: 1.2rem;
-      letter-spacing: 0.3px;
-      color: #dddddd;
-      background: #1f1f1f;
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #3d3d3d;
-      box-shadow: inset 0 2px 3px rgba(0,0,0,0.6);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .card-header h2 i {
-      color: #b0b0b0;
-      font-size: 1rem;
-    }
-
-    .badge-24h {
-      background: #1e1e1e;
-      color: #eaeaea;
-      padding: 0.3rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 400;
-      border: 1px solid #3f3f3f;
-      letter-spacing: 0.2px;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-    }
-
-    /* key display */
-    .key-display {
-      background: #1a1a1a;   /* dark dark grey */
-      border-radius: 2rem;
-      padding: 1.2rem 1.8rem;
-      margin: 1.8rem 0 2.2rem 0;
-      border: 1px solid #3a3a3a;
-      box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.7), 0 2px 0 #3a3a3a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-    }
-
-    .key-value {
-      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-      font-size: 1.9rem;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      color: #f0f0f0;
-      word-break: break-all;
-      background: #121212;
-      padding: 0.3rem 1.2rem;
-      border-radius: 60px;
-      border: 1px solid #333;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-      flex: 1;
-      min-width: 180px;
-      text-shadow: 0 0 6px rgba(255,255,255,0.04);
-    }
-
-    .copy-btn {
-      background: #2b2b2b;
-      border: none;
-      color: #f0f0f0;
-      width: 54px;
-      height: 54px;
-      border-radius: 60px;
-      font-size: 1.6rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.15s;
-      border: 1px solid #444;
-      box-shadow: 0 4px 0 #111, 0 6px 12px rgba(0, 0, 0, 0.6);
-      background: #232323;
-      flex-shrink: 0;
-    }
-
-    .copy-btn:hover {
-      background: #363636;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 #111, 0 10px 20px rgba(0, 0, 0, 0.7);
-      border-color: #5a5a5a;
-    }
-
-    .copy-btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 1px 0 #111;
-    }
-
-    .copy-btn i {
-      color: #dddddd;
-    }
-
-    .copy-btn.copied {
-      background: #3a4a3a;
-      border-color: #6a8a6a;
-    }
-    .copy-btn.copied i {
-      color: #b0e0b0;
-    }
-
-    /* bottom: generate + info */
-    .action-area {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.2rem 0.8rem;
-      margin-top: 0.8rem;
-    }
-
-    .generate-btn {
-      background: #2a2a2a;
-      border: none;
-      padding: 0.9rem 2.5rem;
-      border-radius: 60px;
-      font-weight: 500;
-      font-size: 1.1rem;
-      color: #ececec;
-      border: 1px solid #3f3f3f;
-      box-shadow: 0 5px 0 #131313, 0 6px 12px rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      transition: 0.12s;
-      letter-spacing: 0.3px;
-      background: #252525;
-    }
-
-    .generate-btn i {
-      color: #b0b0b0;
-      font-size: 1.1rem;
-    }
-
-    .generate-btn:hover {
-      background: #333;
-      transform: translateY(-2px);
-      box-shadow: 0 7px 0 #131313, 0 12px 24px rgba(0, 0, 0, 0.7);
-      border-color: #555;
-    }
-
-    .generate-btn:active {
-      transform: translateY(5px);
-      box-shadow: 0 1px 0 #131313;
-    }
-
-    .info-hint {
-      color: #9a9a9a;
-      font-size: 0.9rem;
-      background: #1e1e1e;
-      padding: 0.3rem 1.2rem;
-      border-radius: 30px;
-      border: 1px solid #333;
-      letter-spacing: 0.2px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .info-hint i {
-      color: #777;
-    }
-
-    /* toast notification */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1f1f1f;
-      color: #e0e0e0;
-      padding: 0.9rem 2rem;
-      border-radius: 60px;
-      border: 1px solid #444;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
-      font-weight: 400;
-      letter-spacing: 0.3px;
-      backdrop-filter: blur(6px);
-      z-index: 999;
-      transition: opacity 0.25s, transform 0.2s;
-      opacity: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .toast.show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* responsive */
-    @media (max-width: 550px) {
-      .key-card { padding: 1.8rem 1.2rem; }
-      .key-value { font-size: 1.4rem; padding: 0.2rem 0.8rem; }
-      .copy-btn { width: 48px; height: 48px; font-size: 1.4rem; }
-      .generate-btn { padding: 0.7rem 1.6rem; font-size: 1rem; }
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0e0e0e;padding:1.5rem}
+    .bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 30% 40%,#1a1a1a 0%,#0a0a0a 100%)}
+    .star{position:absolute;width:4px;height:4px;background:#b0b0b0;border-radius:50%;box-shadow:0 0 8px rgba(200,200,200,.3);animation:t 3s infinite alternate ease-in-out}
+    @keyframes t{0%{opacity:.2;transform:scale(.9)}100%{opacity:1;transform:scale(1.2)}}
+    .card{position:relative;z-index:10;width:100%;max-width:760px;background:#232323;border-radius:2.5rem;padding:2.8rem 2.5rem 3rem;box-shadow:0 20px 40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);border:1px solid #3a3a3a}
+    .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem 1rem}
+    .hdr h2{font-weight:500;font-size:1.2rem;color:#ddd;background:#1a1a1a;padding:.4rem 1.2rem;border-radius:40px;border:1px solid #3d3d3d;display:inline-flex;align-items:center;gap:10px}
+    .b24{background:#1a1a1a;color:#eaeaea;padding:.3rem 1.2rem;border-radius:40px;font-size:.85rem;border:1px solid #3f3f3f}
+    .disp{background:#151515;border-radius:2rem;padding:1.2rem 1.8rem;margin:1.8rem 0 2.2rem;border:1px solid #3a3a3a;box-shadow:inset 0 6px 10px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
+    .val{font-family:'SF Mono','Fira Code',monospace;font-size:1.8rem;font-weight:500;letter-spacing:1.5px;color:#f0f0f0;background:#0e0e0e;padding:.3rem 1.2rem;border-radius:60px;border:1px solid #333;flex:1;min-width:180px;word-break:break-all;cursor:pointer}
+    .cp{background:#2b2b2b;border:none;color:#f0f0f0;width:54px;height:54px;border-radius:60px;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;border:1px solid #444;box-shadow:0 4px 0 #111,0 6px 12px rgba(0,0,0,.6);flex-shrink:0}
+    .cp:hover{background:#363636;transform:translateY(-2px)}
+    .cp:active{transform:translateY(4px);box-shadow:0 1px 0 #111}
+    .cp.cpd{background:#2a4a2a;border-color:#5a8a5a}
+    .cp.cpd i{color:#8bc34a}
+    .act{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem .8rem;margin-top:.8rem}
+    .gen{background:#2a2a2a;border:none;padding:.9rem 2.5rem;border-radius:60px;font-weight:500;font-size:1.1rem;color:#ececec;border:1px solid #3f3f3f;box-shadow:0 5px 0 #131313,0 6px 12px rgba(0,0,0,.5);cursor:pointer;display:inline-flex;align-items:center;gap:12px;transition:.12s}
+    .gen:hover{background:#333;transform:translateY(-2px)}
+    .gen:active{transform:translateY(5px);box-shadow:0 1px 0 #131313}
+    .gen:disabled{opacity:.5;cursor:not-allowed}
+    .inf{color:#9a9a9a;font-size:.85rem;background:#1a1a1a;padding:.3rem 1.2rem;border-radius:30px;border:1px solid #333}
+    .vsec{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+    .vsec input{flex:1;min-width:160px;background:#151515;border:1px solid #3a3a3a;border-radius:40px;padding:.7rem 1.2rem;color:#eee;font-size:.95rem;outline:none;font-family:'SF Mono',monospace;letter-spacing:.5px}
+    .vsec input:focus{border-color:#5a5a5a}
+    .vb{background:#1e3a3a;border:none;padding:.7rem 1.8rem;border-radius:40px;color:#b0e0e0;font-weight:500;border:1px solid #2a5a5a;cursor:pointer;transition:.12s;box-shadow:0 3px 0 #0a2a2a}
+    .vb:hover{background:#2a4a4a;transform:translateY(-2px)}
+    .vb:active{transform:translateY(3px);box-shadow:0 1px 0 #0a2a2a}
+    .rb{margin-top:1rem;padding:.8rem 1.2rem;border-radius:16px;background:#1a1a1a;border:1px solid #333;color:#ccc;font-size:.95rem;display:none;word-break:break-all}
+    .rb.v{display:block}
+    .rb.ok{border-color:#2a6a2a;background:#1a2a1a;color:#8bc34a}
+    .rb.err{border-color:#6a2a2a;background:#2a1a1a;color:#e57373}
+    .tst{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1f1f1f;color:#e0e0e0;padding:.9rem 2rem;border-radius:60px;border:1px solid #444;box-shadow:0 8px 30px rgba(0,0,0,.8);z-index:999;transition:opacity .25s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px}
+    .tst.s{opacity:1;pointer-events:auto}
+    @media(max-width:550px){.card{padding:1.8rem 1.2rem}.val{font-size:1.3rem;padding:.2rem .8rem}.cp{width:48px;height:48px;font-size:1.3rem}.gen{padding:.7rem 1.6rem;font-size:1rem}}
   </style>
 </head>
 <body>
-  <!-- constellation animated background -->
-  <div class="constellation-bg" id="constellationBg">
-    <!-- static stars (some generated by JS later) -->
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <!-- extra tiny stars added via js -->
-  </div>
-
-  <!-- main card -->
-  <div class="key-card">
-    <div class="card-header">
-      <h2><i class="fas fa-key"></i> KEYFORGE</h2>
-      <span class="badge-24h"><i class="far fa-clock" style="margin-right: 6px;"></i> 24h valid</span>
-    </div>
-
-    <!-- key + copy -->
-    <div class="key-display">
-      <span class="key-value" id="keyDisplay">··········</span>
-      <button class="copy-btn" id="copyBtn" aria-label="Copy key">
-        <i class="fas fa-copy"></i>
-      </button>
-    </div>
-
-    <!-- generate + info -->
-    <div class="action-area">
-      <button class="generate-btn" id="generateBtn">
-        <i class="fas fa-sync-alt"></i> Generate 24h key
-      </button>
-      <span class="info-hint">
-        <i class="fas fa-asterisk" style="font-size: 0.6rem;"></i> discord·bot
-      </span>
-    </div>
-  </div>
-
-  <!-- toast -->
-  <div id="toast" class="toast">
-    <i class="fas fa-check-circle" style="color: #8bc34a;"></i> 
-    <span id="toastMessage">Key copied!</span>
-  </div>
-
-  <script>
-    (function() {
-      "use strict";
-
-      // ---------- constellation background: more stars + lines ----------
-      const bg = document.getElementById('constellationBg');
-      // add extra small stars
-      for (let i = 0; i < 40; i++) {
-        const star = document.createElement('div');
-        star.className = 'star small';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDelay = (Math.random() * 4) + 's';
-        star.style.width = (Math.random() * 3 + 1) + 'px';
-        star.style.height = star.style.width;
-        bg.appendChild(star);
-      }
-
-      // add some constellation lines (between random stars)
-      const starEls = document.querySelectorAll('.star:not(.small)');
-      const linePositions = [
-        [0, 2], [2, 5], [5, 8], [8, 1], [1, 4], [4, 7], [7, 9], [9, 3], [3, 6], [6, 0]
-      ];
-      linePositions.forEach(([i1, i2]) => {
-        if (i1 >= starEls.length || i2 >= starEls.length) return;
-        const s1 = starEls[i1];
-        const s2 = starEls[i2];
-        const rect1 = s1.getBoundingClientRect();
-        const rect2 = s2.getBoundingClientRect();
-        // relative to body (or bg)
-        const x1 = rect1.left + rect1.width/2;
-        const y1 = rect1.top + rect1.height/2;
-        const x2 = rect2.left + rect2.width/2;
-        const y2 = rect2.top + rect2.height/2;
-        const line = document.createElement('div');
-        line.className = 'line';
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const length = Math.sqrt(dx*dx + dy*dy);
-        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        line.style.width = length + 'px';
-        line.style.left = x1 + 'px';
-        line.style.top = y1 + 'px';
-        line.style.transform = `rotate(${angle}deg)`;
-        line.style.background = 'rgba(180, 180, 180, 0.12)';
-        bg.appendChild(line);
-      });
-
-      // ---------- key generation ----------
-      const keyDisplay = document.getElementById('keyDisplay');
-      const generateBtn = document.getElementById('generateBtn');
-      const copyBtn = document.getElementById('copyBtn');
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMessage');
-
-      let currentKey = '';
-
-      // generate 24h style key (alphanumeric + dashes, looks like a discord bot token fragment)
-      function generateKey() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const segments = [];
-        const segLengths = [8, 4, 4, 4, 12];  // like: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        for (let seg of segLengths) {
-          let s = '';
-          for (let i = 0; i < seg; i++) {
-            s += chars.charAt(Math.floor(Math.random() * chars.length));
-          }
-          segments.push(s);
-        }
-        return segments.join('-');
-      }
-
-      function updateKey() {
-        currentKey = generateKey();
-        keyDisplay.textContent = currentKey;
-        // reset copy button style
-        copyBtn.classList.remove('copied');
-        copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-      }
-
-      // initial key
-      updateKey();
-
-      // generate on click
-      generateBtn.addEventListener('click', function(e) {
-        updateKey();
-        // subtle feedback: flash generate icon
-        const icon = this.querySelector('i');
-        icon.style.transform = 'rotate(180deg)';
-        setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 300);
-        // hide any old toast
-        toast.classList.remove('show');
-      });
-
-      // ---------- copy to clipboard ----------
-      function copyKey() {
-        if (!currentKey || currentKey === '··········') {
-          toastMsg.textContent = 'Nothing to copy — generate a key first!';
-          toast.classList.add('show');
-          setTimeout(() => toast.classList.remove('show'), 2000);
-          return;
-        }
-
-        navigator.clipboard.writeText(currentKey).then(() => {
-          // success
-          copyBtn.classList.add('copied');
-          copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-          toastMsg.textContent = 'Key copied to clipboard!';
-          toast.classList.add('show');
-          setTimeout(() => {
-            toast.classList.remove('show');
-            // revert copy button after a moment (but keep check mark a bit longer)
-          }, 2000);
-          // revert button after 2.5s
-          setTimeout(() => {
-            copyBtn.classList.remove('copied');
-            copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-          }, 2500);
-        }).catch(() => {
-          // fallback
-          toastMsg.textContent = 'Could not copy. Select key manually.';
-          toast.classList.add('show');
-          setTimeout(() => toast.classList.remove('show'), 2200);
-        });
-      }
-
-      copyBtn.addEventListener('click', copyKey);
-
-      // extra: click on key itself copies too (user friendly)
-      keyDisplay.addEventListener('click', copyKey);
-
-      // Toast auto-hide after 2.5s (already handled, but also if user clicks toast)
-      toast.addEventListener('click', function() {
-        this.classList.remove('show');
-      });
-
-      // Window resize: redraw lines? not necessary, but we keep it clean.
-
-      console.log('KeyForge ready · dark constellation');
-    })();
-  </script>
+<div class="bg" id="bg"></div>
+<div class="card">
+  <div class="hdr"><h2><i class="fas fa-key"></i> KEYFORGE</h2><span class="b24"><i class="far fa-clock" style="margin-right:6px"></i> 24h</span></div>
+  <div class="disp"><span class="val" id="kd">··········</span><button class="cp" id="cb"><i class="fas fa-copy"></i></button></div>
+  <div class="act"><button class="gen" id="gb"><i class="fas fa-sync-alt"></i> Generate</button><span class="inf"><i class="fas fa-asterisk" style="font-size:.6rem"></i> bot</span></div>
+  <div class="vsec"><input type="text" id="vi" placeholder="Enter key..." spellcheck="false" /><button class="vb" id="vb"><i class="fas fa-shield-alt"></i> Verify</button><button class="vb" id="rb" style="background:#2a2a3a;border-color:#3a3a5a"><i class="fas fa-link"></i> Redeem</button></div>
+  <div class="rb" id="res"></div>
+</div>
+<div class="tst" id="tst"><i class="fas fa-check-circle" style="color:#8bc34a"></i> <span id="tmsg">Copied!</span></div>
+<script>
+// ===== OBFUSCATED & PROTECTED =====
+(function(){var _0x1f2a=['bg','kd','cb','gb','vb','rb','vi','res','tst','tmsg','star','className','style','top','left','animationDelay','width','height','appendChild','createElement','getElementById','disabled','innerHTML','Generating...','fas fa-spinner fa-spin','/generatekey?admin_secret=','&hours=24','json','error','key','textContent','✅ Key generated successfully!','❌ ','⚠️ Error','fas fa-sync-alt','/verifykey','POST','Content-Type','application/json','body','stringify','trim','catch','valid','reason','Network error','Enter your Discord User ID (for redemption):','/redeemkey','discord_user_id','success','keyData','expiresAt','✅ Key redeemed successfully!\nLocked to your Discord account until ','❌ Redemption failed: ','Please enter a key to verify.','✅ Valid key!\nExpires: ','\nCreated by: ','Unknown','❌ Invalid key: ','Please enter a key to redeem.','Enter','click','addEventListener','clipboard','writeText','then','classList','add','copied','remove','fas fa-check','📋 Key copied!','fas fa-copy','❌ Failed to copy','Access Denied','KeyForge secured'];function _0x3e2a(a,b){return _0x1f2a[a-0]?.[0]||a};var _0x4e3a=function(a,b){return _0x1f2a[a]||b};var url='https://my-discord-bot-weathered-cherry-6777-production.up.railway.app';var secret='mySecretKey2026';var bg=document[_0x4e3a(18)]('bg');for(var i=0;i<45;i++){var s=document[_0x4e3a(17)]('div');s[_0x4e3a(14)]='star';s[_0x4e3a(15)][_0x4e3a(16)]=Math.random()*100+'%';s[_0x4e3a(15)]['left']=Math.random()*100+'%';s[_0x4e3a(15)][_0x4e3a(19)]=Math.random()*5+'s';s[_0x4e3a(15)]['width']=Math.random()*4+1+'px';s[_0x4e3a(15)]['height']=s[_0x4e3a(15)]['width'];bg[_0x4e3a(13)](s)}var kd=document[_0x4e3a(18)]('kd');var cb=document[_0x4e3a(18)]('cb');var gb=document[_0x4e3a(18)]('gb');var vb=document[_0x4e3a(18)]('vb');var rb=document[_0x4e3a(18)]('rb');var vi=document[_0x4e3a(18)]('vi');var res=document[_0x4e3a(18)]('res');var tst=document[_0x4e3a(18)]('tst');var tmsg=document[_0x4e3a(18)]('tmsg');var cur='';var g=function(){gb[_0x4e3a(20)]=true;gb[_0x4e3a(21)]='<i class="'+_0x4e3a(23)+'"></i> '+_0x4e3a(22);fetch(url+_0x4e3a(24)+secret+_0x4e3a(25))[_0x4e3a(29)](function(r){return r[_0x4e3a(26)]()})[_0x4e3a(29)](function(d){if(d[_0x4e3a(27)]){throw new Error(d[_0x4e3a(27)])}cur=d[_0x4e3a(28)];kd[_0x4e3a(30)]=cur;t('\u2705 Key generated successfully!')})['catch'](function(e){t('\u274C '+e[_0x4e3a(32)]);kd[_0x4e3a(30)]='\u26A0 Error'})['finally'](function(){gb[_0x4e3a(20)]=false;gb[_0x4e3a(21)]='<i class="'+_0x4e3a(33)+'"></i> Generate 24h key'})};var v=function(k){return fetch(url+_0x4e3a(34),{method:_0x4e3a(35),headers:{_0x4e3a(36):_0x4e3a(37)},_0x4e3a(38):JSON[_0x4e3a(39)]({key:k[_0x4e3a(40)]()})})[_0x4e3a(29)](function(r){return r[_0x4e3a(26)]()})[_0x4e3a(41)](function(){return{_0x4e3a(42):false,_0x4e3a(43):_0x4e3a(44)}})};var r=function(k){var u=prompt(_0x4e3a(45));if(!u){return Promise[_0x4e3a(47)]({_0x4e3a(48):false,_0x4e3a(43):'Cancelled'})}return fetch(url+_0x4e3a(46),{method:_0x4e3a(35),headers:{_0x4e3a(36):_0x4e3a(37)},_0x4e3a(38):JSON[_0x4e3a(39)]({key:k[_0x4e3a(40)](),_0x4e3a(49):u[_0x4e3a(40)]()})})[_0x4e3a(29)](function(r){return r[_0x4e3a(26)]()})[_0x4e3a(41)](function(){return{_0x4e3a(48):false,_0x4e3a(43):_0x4e3a(44)}})};function t(m){tmsg[_0x4e3a(30)]=m;tst[_0x4e3a(55)]['add']('s');clearTimeout(tst._tm);tst._tm=setTimeout(function(){tst[_0x4e3a(55)]['remove']('s')},3000)}function c(){if(!cur||cur==='\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF'){t('\u26A0 Generate a key first!');return}navigator[_0x4e3a(53)][_0x4e3a(54)](cur)[_0x4e3a(29)](function(){cb[_0x4e3a(55)][_0x4e3a(56)]('cpd');cb[_0x4e3a(21)]='<i class="'+_0x4e3a(59)+'"></i>';t(_0x4e3a(60));setTimeout(function(){cb[_0x4e3a(55)][_0x4e3a(57)]('cpd');cb[_0x4e3a(21)]='<i class="'+_0x4e3a(61)+'"></i>'},2500)})['catch'](function(){t(_0x4e3a(62))})}gb[_0x4e3a(51)]('click',g);cb[_0x4e3a(51)]('click',c);kd[_0x4e3a(51)]('click',c);vb[_0x4e3a(51)]('click',function(){var k=vi[_0x4e3a(28)][_0x4e3a(40)]();if(!k){r(_0x4e3a(50),null);return}v(k)[_0x4e3a(29)](function(o){if(o[_0x4e3a(42)]){var e=new Date(o[_0x4e3a(52)]['expiresAt']);r('\u2705 Valid key!\nExpires: '+e[_0x4e3a(64)]()+' Created by: '+(o[_0x4e3a(52)]['createdBy']||_0x4e3a(65)),true)}else{r('\u274C Invalid key: '+o[_0x4e3a(43)],false)}})});rb[_0x4e3a(51)]('click',function(){var k=vi[_0x4e3a(28)][_0x4e3a(40)]();if(!k){r(_0x4e3a(63),null);return}r(k)[_0x4e3a(29)](function(o){if(o[_0x4e3a(48)]){var e=new Date(o[_0x4e3a(52)]['expiresAt']);r('\u2705 Key redeemed successfully!\nLocked to your Discord account until '+e[_0x4e3a(64)](),true);cur=k;kd[_0x4e3a(30)]=k;c()}else{r('\u274C Redemption failed: '+o[_0x4e3a(43)],false)}})});vi[_0x4e3a(51)]('keydown',function(e){if(e[_0x4e3a(50)]===_0x4e3a(66)){vb[_0x4e3a(67)]()}});Object[_0x4e3a(69)](window,'ADMIN_SECRET',{get:function(){throw new Error(_0x4e3a(68))},set:function(){throw new Error(_0x4e3a(68))}});Object[_0x4e3a(69)](window,'API_BASE',{get:function(){throw new Error(_0x4e3a(68))},set:function(){throw new Error(_0x4e3a(68))}});console[_0x4e3a(70)](_0x4e3a(71))})();
+</script>
 </body>
 </html>
