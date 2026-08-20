@@ -3,102 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KeyForge · License Key Generator</title>
+  <title>KeyForge · secure terminal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
-    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0e0e0e;padding:1.5rem;position:relative}
-    .constellation-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 30% 40%,#1a1a1a 0%,#0a0a0a 100%)}
-    .star{position:absolute;width:4px;height:4px;background:#b0b0b0;border-radius:50%;box-shadow:0 0 8px rgba(200,200,200,.3);animation:twinkle 3s infinite alternate ease-in-out}
-    @keyframes twinkle{0%{opacity:.2;transform:scale(.9)}100%{opacity:1;transform:scale(1.2)}}
-    .key-card{position:relative;z-index:10;width:100%;max-width:760px;background:#232323;border-radius:2.5rem;padding:2.8rem 2.5rem 3rem;box-shadow:0 20px 40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);backdrop-filter:blur(2px);border:1px solid #3a3a3a}
-    .key-card:hover{border-color:#4a4a4a}
-    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem 1rem}
-    .card-header h2{font-weight:500;font-size:1.2rem;color:#ddd;background:#1a1a1a;padding:.4rem 1.2rem;border-radius:40px;border:1px solid #3d3d3d;display:inline-flex;align-items:center;gap:10px}
-    .badge-24h{background:#1a1a1a;color:#eaeaea;padding:.3rem 1.2rem;border-radius:40px;font-size:.85rem;border:1px solid #3f3f3f}
-    .key-display{background:#151515;border-radius:2rem;padding:1.2rem 1.8rem;margin:1.8rem 0 2.2rem;border:1px solid #3a3a3a;box-shadow:inset 0 6px 10px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
-    .key-value{font-family:'SF Mono','Fira Code',monospace;font-size:1.8rem;font-weight:500;letter-spacing:1.5px;color:#f0f0f0;background:#0e0e0e;padding:.3rem 1.2rem;border-radius:60px;border:1px solid #333;flex:1;min-width:180px;word-break:break-all;cursor:pointer}
-    .key-value:hover{background:#1a1a1a}
-    .copy-btn{background:#2b2b2b;border:none;color:#f0f0f0;width:54px;height:54px;border-radius:60px;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;border:1px solid #444;box-shadow:0 4px 0 #111,0 6px 12px rgba(0,0,0,.6);flex-shrink:0}
-    .copy-btn:hover{background:#363636;transform:translateY(-2px)}
-    .copy-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #111}
-    .copy-btn.copied{background:#2a4a2a;border-color:#5a8a5a}
-    .copy-btn.copied i{color:#8bc34a}
-    .action-area{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem .8rem;margin-top:.8rem}
-    .generate-btn{background:#2a2a2a;border:none;padding:.9rem 2.5rem;border-radius:60px;font-weight:500;font-size:1.1rem;color:#ececec;border:1px solid #3f3f3f;box-shadow:0 5px 0 #131313,0 6px 12px rgba(0,0,0,.5);cursor:pointer;display:inline-flex;align-items:center;gap:12px;transition:.12s}
-    .generate-btn:hover{background:#333;transform:translateY(-2px)}
-    .generate-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #131313}
-    .generate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:0 5px 0 #131313}
-    .info-hint{color:#9a9a9a;font-size:.85rem;background:#1a1a1a;padding:.3rem 1.2rem;border-radius:30px;border:1px solid #333;display:flex;align-items:center;gap:8px}
-    .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-    .status-dot.online{background:#4caf50;box-shadow:0 0 8px #4caf5066}
-    .status-dot.offline{background:#f44336;box-shadow:0 0 8px #f4433666}
-    .verify-section{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
-    .verify-section input{flex:1;min-width:160px;background:#151515;border:1px solid #3a3a3a;border-radius:40px;padding:.7rem 1.2rem;color:#eee;font-size:.95rem;outline:none;font-family:'SF Mono',monospace;letter-spacing:.5px}
-    .verify-section input:focus{border-color:#5a8a5a}
-    .verify-section input::placeholder{color:#555}
-    .verify-btn{background:#1e3a3a;border:none;padding:.7rem 1.8rem;border-radius:40px;color:#b0e0e0;font-weight:500;border:1px solid #2a5a5a;cursor:pointer;transition:.12s;box-shadow:0 3px 0 #0a2a2a}
-    .verify-btn:hover{background:#2a4a4a;transform:translateY(-2px)}
-    .verify-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0a2a2a}
-    .verify-btn.redeem{background:#2a2a3a;border-color:#3a3a5a;box-shadow:0 3px 0 #1a1a2a}
-    .verify-btn.redeem:hover{background:#3a3a4a;border-color:#4a4a6a}
-    .result-box{margin-top:1rem;padding:.8rem 1.2rem;border-radius:16px;background:#1a1a1a;border:1px solid #333;color:#ccc;font-size:.95rem;display:none;word-break:break-all;white-space:pre-line;max-height:300px;overflow-y:auto}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New', Courier, 'VT323', monospace}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0c0b0a;padding:1.5rem;position:relative}
+    .crt-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center, rgba(20,30,20,0.1) 0%, rgba(0,10,0,0.4) 100%);mix-blend-mode:multiply}
+    .scanline{position:fixed;inset:0;pointer-events:none;z-index:3;background:repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px);animation:scan 8s linear infinite}
+    @keyframes scan{0%{background-position-y:0}100%{background-position-y:100%}}
+    .vignette{position:fixed;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 160px rgba(0,0,0,0.8)}
+    .terminal{position:relative;z-index:10;width:100%;max-width:780px;background:#131210;border-radius:24px 24px 20px 20px;box-shadow:0 24px 60px rgba(0,0,0,0.9),0 0 0 2px #3f4a3a,0 0 0 4px #1e1e1a;padding:0 0 1.8rem 0;border:1px solid #3e4d3a;transition:border 0.1s}
+    .terminal-header{background:#1a1f18;padding:0.9rem 1.8rem;border-radius:22px 22px 0 0;border-bottom:2px solid #364031;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .terminal-header .led{display:flex;gap:8px;align-items:center}
+    .led-dot{width:12px;height:12px;border-radius:50%;background:#5e6b56;box-shadow:inset 0 1px 3px rgba(0,0,0,0.7)}
+    .led-dot.green{background:#77b35c;box-shadow:0 0 10px #77b35c88, inset 0 1px 2px #b0e090}
+    .led-dot.red{background:#b35c5c;box-shadow:0 0 10px #b35c5c88}
+    .terminal-title{color:#b8c9a8;font-size:1.2rem;letter-spacing:3px;font-weight:400;text-shadow:0 0 6px #6d8a5a;flex:1;text-align:center;font-family:'VT323',monospace;text-transform:uppercase}
+    .terminal-title i{margin-right:10px;color:#8fb07a}
+    .badge-crypto{background:#1f2a1c;color:#b0c8a0;padding:0.2rem 1.2rem;border-radius:40px;font-size:0.8rem;border:1px solid #3a5535;letter-spacing:1px}
+    .terminal-body{padding:1.8rem 2rem 1.2rem}
+    .key-panel{background:#0e130d;border-radius:18px;padding:1.2rem 1.6rem;margin:0.6rem 0 1.8rem;border:1px solid #2f3d2a;box-shadow:inset 0 4px 12px rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:space-between;gap:1.2rem;flex-wrap:wrap}
+    .key-value{font-family:'VT323','Courier New',monospace;font-size:2.4rem;font-weight:400;letter-spacing:3px;color:#d4e8c4;background:#080c06;padding:0.2rem 1.2rem;border-radius:40px;border:1px solid #3b5233;flex:1;min-width:180px;word-break:break-all;cursor:pointer;text-shadow:0 0 12px #7baa6680;transition:all 0.1s}
+    .key-value:hover{background:#121f0e;border-color:#5d8050}
+    .copy-btn{background:#1f2a1a;border:none;color:#c8ddb8;width:54px;height:54px;border-radius:60px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.08s;border:1px solid #3b5233;box-shadow:0 4px 0 #0a1208,0 6px 12px rgba(0,0,0,0.7);flex-shrink:0}
+    .copy-btn:hover{background:#2c3d24;transform:translateY(-2px);border-color:#5d8050}
+    .copy-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0a1208}
+    .copy-btn.copied{background:#1f3a1a;border-color:#6b9a55}
+    .copy-btn.copied i{color:#a8d690}
+    .action-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem 0.6rem;margin-top:0.4rem}
+    .generate-btn{background:#1d2a18;border:none;padding:0.9rem 2.2rem;border-radius:60px;font-weight:400;font-size:1.2rem;color:#d4e8c4;border:1px solid #3d5a33;box-shadow:0 5px 0 #0c150a,0 6px 12px rgba(0,0,0,0.6);cursor:pointer;display:inline-flex;align-items:center;gap:14px;transition:0.1s;font-family:'VT323',monospace;letter-spacing:1.5px}
+    .generate-btn:hover{background:#283f20;transform:translateY(-2px)}
+    .generate-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #0c150a}
+    .generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:0 5px 0 #0c150a}
+    .status-indicator{color:#96a88a;font-size:0.9rem;background:#141f10;padding:0.3rem 1.4rem;border-radius:30px;border:1px solid #2f3d2a;display:flex;align-items:center;gap:10px;font-family:'VT323',monospace;letter-spacing:0.5px}
+    .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+    .status-dot.online{background:#77b35c;box-shadow:0 0 16px #77b35caa}
+    .status-dot.offline{background:#b35c5c;box-shadow:0 0 16px #b35c5caa}
+    .verify-panel{margin-top:1.8rem;padding-top:1.5rem;border-top:2px solid #2b3825;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center}
+    .verify-panel input{flex:1;min-width:140px;background:#0e130d;border:1px solid #2f3d2a;border-radius:40px;padding:0.7rem 1.4rem;color:#d4e8c4;font-size:1rem;outline:none;font-family:'VT323',monospace;letter-spacing:1.5px}
+    .verify-panel input:focus{border-color:#5d8050;box-shadow:0 0 12px #3d5a3344}
+    .verify-panel input::placeholder{color:#4a6040}
+    .verify-btn{background:#1a2a1a;border:none;padding:0.7rem 2rem;border-radius:40px;color:#b8d8a8;font-weight:400;border:1px solid #2f4a2a;cursor:pointer;transition:0.1s;box-shadow:0 3px 0 #0f1a0f;font-family:'VT323',monospace;font-size:1.1rem;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
+    .verify-btn:hover{background:#264026;transform:translateY(-2px);border-color:#4d7040}
+    .verify-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0f1a0f}
+    .verify-btn.redeem{background:#1a1f2a;border-color:#2a3a4a;box-shadow:0 3px 0 #0e141f}
+    .verify-btn.redeem:hover{background:#27354a;border-color:#3a506a}
+    .result-box{margin-top:1.2rem;padding:0.8rem 1.4rem;border-radius:14px;background:#0e130d;border:1px solid #2b3825;color:#b8c8a8;font-size:1rem;display:none;word-break:break-all;white-space:pre-line;max-height:300px;overflow-y:auto;font-family:'VT323',monospace;letter-spacing:0.5px}
     .result-box.visible{display:block}
-    .result-box.valid{border-color:#2a6a2a;background:#1a2a1a;color:#8bc34a}
-    .result-box.invalid{border-color:#6a2a2a;background:#2a1a1a;color:#e57373}
-    .result-box.error{border-color:#6a4a2a;background:#2a1a1a;color:#e5a373}
-    .result-box.loading{border-color:#4a4a6a;background:#1a1a2a;color:#aab0d0}
-    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1f1f1f;color:#e0e0e0;padding:.9rem 2rem;border-radius:60px;border:1px solid #444;box-shadow:0 8px 30px rgba(0,0,0,.8);z-index:999;transition:opacity .25s,transform .2s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px}
+    .result-box.valid{border-color:#3a6a2a;background:#132010;color:#b0d89a}
+    .result-box.invalid{border-color:#6a2a2a;background:#1f1010;color:#d8a0a0}
+    .result-box.error{border-color:#6a4a2a;background:#1f1a10;color:#d8b890}
+    .result-box.loading{border-color:#3a4a5a;background:#101a1f;color:#a0b8c8}
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1f18;color:#c8ddb8;padding:0.8rem 2.2rem;border-radius:60px;border:1px solid #3b5233;box-shadow:0 8px 30px rgba(0,0,0,0.9);z-index:999;transition:opacity 0.2s,transform 0.15s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:14px;font-family:'VT323',monospace;font-size:1.2rem}
     .toast.show{opacity:1;pointer-events:auto}
-    .debug-info{font-size:.7rem;color:#666;margin-top:8px;padding:8px;background:#0a0a0a;border-radius:8px;font-family:monospace;word-break:break-all}
-    @media(max-width:550px){.key-card{padding:1.8rem 1.2rem}.key-value{font-size:1.3rem;padding:.2rem .8rem}.copy-btn{width:48px;height:48px;font-size:1.3rem}.generate-btn{padding:.7rem 1.6rem;font-size:1rem}}
+    .debug-foot{font-size:0.65rem;color:#4a5a42;margin-top:12px;padding:6px 12px;background:#0a0f08;border-radius:8px;font-family:'Courier New',monospace;word-break:break-all;border:1px solid #1f2a1a;text-align:center}
+    @media(max-width:600px){.terminal-body{padding:1.2rem 1rem}.key-value{font-size:1.8rem}.copy-btn{width:46px;height:46px;font-size:1.2rem}.generate-btn{padding:0.6rem 1.4rem;font-size:1rem}}
   </style>
 </head>
 <body>
-  <div class="constellation-bg" id="constellationBg"></div>
+  <div class="crt-overlay"></div>
+  <div class="scanline"></div>
+  <div class="vignette"></div>
 
-  <div class="key-card">
-    <div class="card-header">
-      <h2><i class="fas fa-key"></i> KEYFORGE</h2>
-      <span class="badge-24h"><i class="far fa-clock" style="margin-right:6px"></i> 24h valid</span>
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="led">
+        <span class="led-dot green"></span>
+        <span class="led-dot" style="background:#5e6b56;"></span>
+        <span class="led-dot red"></span>
+      </div>
+      <div class="terminal-title"><i class="fas fa-terminal"></i> keyforge :: secure vault</div>
+      <span class="badge-crypto"><i class="fas fa-lock" style="margin-right:6px;"></i> 24h</span>
     </div>
 
-    <div class="key-display">
-      <span class="key-value" id="keyDisplay">··········</span>
-      <button class="copy-btn" id="copyBtn" aria-label="Copy key">
-        <i class="fas fa-copy"></i>
-      </button>
-    </div>
+    <div class="terminal-body">
+      <div class="key-panel">
+        <span class="key-value" id="keyDisplay">··········</span>
+        <button class="copy-btn" id="copyBtn" aria-label="copy"><i class="fas fa-copy"></i></button>
+      </div>
 
-    <div class="action-area">
-      <button class="generate-btn" id="generateBtn">
-        <i class="fas fa-sync-alt"></i> Generate 24h key
-      </button>
-      <span class="info-hint">
-        <span class="status-dot offline" id="statusDot"></span>
-        <span id="statusText">connecting...</span>
-      </span>
-    </div>
+      <div class="action-row">
+        <button class="generate-btn" id="generateBtn"><i class="fas fa-sync-alt"></i> generate</button>
+        <span class="status-indicator">
+          <span class="status-dot offline" id="statusDot"></span>
+          <span id="statusText">connecting</span>
+        </span>
+      </div>
 
-    <div class="verify-section">
-      <input type="text" id="verifyInput" placeholder="Enter key to verify..." spellcheck="false" />
-      <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> Verify</button>
-      <button class="verify-btn redeem" id="redeemBtn"><i class="fas fa-link"></i> Redeem</button>
+      <div class="verify-panel">
+        <input type="text" id="verifyInput" placeholder="paste key..." spellcheck="false" />
+        <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> verify</button>
+        <button class="verify-btn redeem" id="redeemBtn"><i class="fas fa-link"></i> redeem</button>
+      </div>
+      <div class="result-box" id="resultBox"></div>
+      <div class="debug-foot" id="debugFoot">🔒 secure channel · RSA-2048</div>
     </div>
-    <div class="result-box" id="resultBox"></div>
   </div>
 
-  <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">Copied!</span></div>
+  <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">copied</span></div>
 
   <script>
     (function(){
-      // ===== YOUR RAILWAY URL =====
       var API_BASE = 'https://my-discord-bot-weathered-cherry-6777-production.up.railway.app';
-      
-      // ===== DOM ELEMENTS =====
-      var bg = document.getElementById('constellationBg');
-      for(var i=0;i<50;i++){var star=document.createElement('div');star.className='star';star.style.top=Math.random()*100+'%';star.style.left=Math.random()*100+'%';star.style.animationDelay=Math.random()*5+'s';star.style.width=Math.random()*4+1+'px';star.style.height=star.style.width;bg.appendChild(star)}
-      
       var keyDisplay = document.getElementById('keyDisplay');
       var generateBtn = document.getElementById('generateBtn');
       var copyBtn = document.getElementById('copyBtn');
@@ -111,12 +117,11 @@
       var resultBox = document.getElementById('resultBox');
       var statusDot = document.getElementById('statusDot');
       var statusText = document.getElementById('statusText');
-      
+      var debugFoot = document.getElementById('debugFoot');
       var currentKey = '';
 
-      // ===== UI HELPERS =====
-      function showResult(message, type) {
-        resultBox.textContent = message;
+      function showResult(msg, type) {
+        resultBox.textContent = msg;
         resultBox.classList.add('visible');
         resultBox.className = 'result-box visible';
         if (type === 'valid') resultBox.classList.add('valid');
@@ -127,230 +132,167 @@
 
       function showToast(msg, isError) {
         toastMsg.textContent = msg;
-        toastIcon.className = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
-        toastIcon.style.color = isError ? '#e57373' : '#8bc34a';
+        toastIcon.className = isError ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
+        toastIcon.style.color = isError ? '#d8a0a0' : '#b0d89a';
         toast.classList.add('show');
         clearTimeout(toast._timer);
-        toast._timer = setTimeout(function(){ toast.classList.remove('show'); }, 4000);
+        toast._timer = setTimeout(function(){ toast.classList.remove('show'); }, 3600);
       }
 
-      function updateStatus(online, message) {
+      function updateStatus(online, msg) {
         statusDot.className = 'status-dot ' + (online ? 'online' : 'offline');
-        statusText.textContent = message || (online ? 'online' : 'offline');
-        statusText.style.color = online ? '#8bc34a' : '#e57373';
+        statusText.textContent = msg || (online ? 'online' : 'offline');
+        statusText.style.color = online ? '#b0d89a' : '#d8a0a0';
+        debugFoot.textContent = online ? '🔒 secure · ' + API_BASE.replace(/^https?:\/\//,'') : '⚠️ offline · retry';
       }
 
       function copyKey() {
         if (!currentKey || currentKey === '··········') {
-          showToast('⚠️ Generate a key first!', true);
+          showToast('generate key first', true);
           return;
         }
         navigator.clipboard.writeText(currentKey).then(function(){
           copyBtn.classList.add('copied');
           copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-          showToast('📋 Key copied!');
+          showToast('key copied');
           setTimeout(function(){
             copyBtn.classList.remove('copied');
             copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-          }, 2500);
-        }).catch(function(){ showToast('❌ Failed to copy', true); });
+          }, 2000);
+        }).catch(function(){ showToast('copy failed', true); });
       }
 
-      // ===== GENERATE KEY (GET request - already working) =====
       async function generateKey() {
         generateBtn.disabled = true;
-        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-        showResult('⏳ Generating key...', 'loading');
-
+        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> generating';
+        showResult('⏳ generating secure key...', 'loading');
         try {
           var res = await fetch(API_BASE + '/generatekey?hours=24', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           });
-
           if (!res.ok) {
-            if (res.status === 403) throw new Error('Access denied. Check CORS.');
-            if (res.status === 404) throw new Error('Endpoint not found.');
-            throw new Error('Server error: ' + res.status);
+            if (res.status === 403) throw new Error('access denied (CORS)');
+            if (res.status === 404) throw new Error('endpoint missing');
+            throw new Error('server error ' + res.status);
           }
-
           var data = await res.json();
-          
           if (data.error) throw new Error(data.error);
-
           currentKey = data.key;
           keyDisplay.textContent = currentKey;
           var expires = new Date(data.expires_at);
-          showResult('✅ Key generated!\n\nKey: ' + data.key + '\nExpires: ' + expires.toLocaleString(), 'valid');
-          showToast('✅ Key generated!');
+          showResult('✅ key generated\n\n' + data.key + '\nexpires: ' + expires.toLocaleString(), 'valid');
+          showToast('key generated');
           updateStatus(true, 'online');
-
         } catch (err) {
-          showResult('❌ Error: ' + err.message, 'error');
-          showToast('❌ ' + err.message, true);
-          keyDisplay.textContent = '⚠️ Error';
+          showResult('❌ ' + err.message, 'error');
+          showToast('error: ' + err.message, true);
+          keyDisplay.textContent = '⚠️ error';
           updateStatus(false, 'error');
         }
-
         generateBtn.disabled = false;
-        generateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Generate 24h key';
+        generateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> generate';
       }
 
-      // ===== VERIFY KEY (POST request - needs CORS fix on bot) =====
       async function verifyKey(key) {
         try {
           var res = await fetch(API_BASE + '/verifykey', {
             method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({ key: key.trim() })
           });
-          
           if (!res.ok) {
-            if (res.status === 403) throw new Error('CORS error - bot needs CORS headers for POST');
-            if (res.status === 404) throw new Error('Endpoint not found');
-            throw new Error('Server error: ' + res.status);
+            if (res.status === 403) throw new Error('CORS block (POST)');
+            if (res.status === 404) throw new Error('endpoint not found');
+            throw new Error('server error ' + res.status);
           }
-          
           return await res.json();
         } catch (err) {
-          return { valid: false, reason: 'Connection error: ' + err.message };
+          return { valid: false, reason: 'connection fail: ' + err.message };
         }
       }
 
-      // ===== REDEEM KEY (POST request - needs CORS fix on bot) =====
       async function redeemKey(key) {
         try {
-          var userId = prompt('Enter your Discord User ID (for redemption):');
-          if (!userId) return { success: false, reason: 'Cancelled' };
-
+          var userId = prompt('Discord user ID:');
+          if (!userId) return { success: false, reason: 'cancelled' };
           var res = await fetch(API_BASE + '/redeemkey', {
             method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({ key: key.trim(), discord_user_id: userId.trim() })
           });
-          
           if (!res.ok) {
-            if (res.status === 403) throw new Error('CORS error - bot needs CORS headers for POST');
-            if (res.status === 404) throw new Error('Endpoint not found');
-            throw new Error('Server error: ' + res.status);
+            if (res.status === 403) throw new Error('CORS block (POST)');
+            if (res.status === 404) throw new Error('endpoint not found');
+            throw new Error('server error ' + res.status);
           }
-          
           return await res.json();
         } catch (err) {
-          return { success: false, reason: 'Connection error: ' + err.message };
+          return { success: false, reason: 'connection fail: ' + err.message };
         }
       }
 
-      // ===== EVENT LISTENERS =====
       generateBtn.addEventListener('click', generateKey);
       copyBtn.addEventListener('click', copyKey);
       keyDisplay.addEventListener('click', copyKey);
 
       verifyBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
-        if (!key) { showResult('Please enter a key to verify.', 'error'); return; }
-
-        showResult('⏳ Verifying key...\n\nThis may take a moment...', 'loading');
+        if (!key) { showResult('enter a key to verify', 'error'); return; }
+        showResult('⏳ verifying ...', 'loading');
         var result = await verifyKey(key);
-        
         if (result.valid) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult(
-            '✅ Valid key!\n\n' +
-            'Key: ' + key + '\n' +
-            'Expires: ' + expires.toLocaleString() + '\n' +
-            'Created by: ' + (result.keyData.createdBy || 'Unknown') + '\n' +
-            'Status: Available to redeem',
-            'valid'
-          );
-          showToast('✅ Key is valid!');
+          showResult('✅ valid key\n\n' + key + '\nexpires: ' + expires.toLocaleString() + '\ncreator: ' + (result.keyData.createdBy || 'system'), 'valid');
+          showToast('key valid');
           updateStatus(true, 'online');
         } else {
-          showResult('❌ ' + result.reason + '\n\n⚠️ If this is a CORS error, the bot needs to be updated with CORS headers for POST requests.', 'invalid');
-          showToast('❌ ' + result.reason, true);
-          if (result.reason.includes('CORS')) {
-            updateStatus(false, 'CORS error');
-          }
+          showResult('❌ ' + result.reason + '\n\n(cors? check bot headers)', 'invalid');
+          showToast('invalid: ' + result.reason, true);
+          if (result.reason.includes('CORS')) updateStatus(false, 'cors error');
         }
       });
 
       redeemBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
-        if (!key) { showResult('Please enter a key to redeem.', 'error'); return; }
-
-        showResult('⏳ Redeeming key...\n\nPlease enter your Discord ID in the popup.', 'loading');
+        if (!key) { showResult('enter key to redeem', 'error'); return; }
+        showResult('⏳ redeeming ...', 'loading');
         var result = await redeemKey(key);
-        
         if (result.success) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult(
-            '✅ Key redeemed!\n\n' +
-            'Key: ' + key + '\n' +
-            'Locked to: Your Discord Account\n' +
-            'Expires: ' + expires.toLocaleString(),
-            'valid'
-          );
+          showResult('✅ redeemed\n\n' + key + '\nlocked to your account\nexpires: ' + expires.toLocaleString(), 'valid');
           currentKey = key;
           keyDisplay.textContent = key;
-          showToast('✅ Key redeemed!');
+          showToast('redeemed!');
           updateStatus(true, 'online');
-          setTimeout(copyKey, 500);
+          setTimeout(copyKey, 400);
         } else {
-          showResult('❌ ' + result.reason + '\n\n⚠️ If this is a CORS error, the bot needs to be updated with CORS headers for POST requests.', 'invalid');
-          showToast('❌ ' + result.reason, true);
-          if (result.reason.includes('CORS')) {
-            updateStatus(false, 'CORS error');
-          }
+          showResult('❌ ' + result.reason + '\n\n(cors? check bot headers)', 'invalid');
+          showToast('redeem fail: ' + result.reason, true);
+          if (result.reason.includes('CORS')) updateStatus(false, 'cors error');
         }
       });
 
-      verifyInput.addEventListener('keydown', function(e){
-        if (e.key === 'Enter') verifyBtn.click();
-      });
+      verifyInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') verifyBtn.click(); });
 
-      // ===== TEST CONNECTION =====
       async function testConnection() {
         try {
           updateStatus(false, 'connecting...');
-          var res = await fetch(API_BASE + '/health', { 
-            method: 'GET',
-            signal: AbortSignal.timeout(5000)
-          });
-          
+          var res = await fetch(API_BASE + '/health', { method: 'GET', signal: AbortSignal.timeout(5000) });
           if (res.ok) {
             updateStatus(true, 'online');
-            console.log('✅ Connected to bot at:', API_BASE);
-            showResult('✅ Connected to bot!\n\nGET requests work (generating keys).\n\n⚠️ If Verify/Redeem fail, the bot needs CORS headers for POST requests.', 'valid');
-            setTimeout(function(){ 
-              if (resultBox.classList.contains('visible')) {
-                resultBox.classList.remove('visible');
-              }
-            }, 5000);
+            showResult('✅ connected to vault\n\nGET works. if verify/redeem fail, bot needs CORS for POST.', 'valid');
+            setTimeout(function(){ if (resultBox.classList.contains('visible')) resultBox.classList.remove('visible'); }, 4800);
           } else {
             updateStatus(false, 'error ' + res.status);
           }
         } catch (err) {
           updateStatus(false, 'offline');
-          console.warn('⚠️ Cannot connect to bot:', err.message);
-          showResult(
-            '⚠️ Cannot connect to bot\n\n' +
-            'URL: ' + API_BASE + '\n' +
-            'Error: ' + err.message + '\n\n' +
-            'Make sure the bot is running on Railway.',
-            'error'
-          );
+          showResult('⚠️ cannot reach vault\n\n' + API_BASE + '\n' + err.message, 'error');
         }
       }
 
-      // ===== INIT =====
       testConnection();
-      console.log('🔑 KeyForge ready · API:', API_BASE);
     })();
   </script>
 </body>
