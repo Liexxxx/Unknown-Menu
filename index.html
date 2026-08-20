@@ -3,105 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KeyForge · secure terminal</title>
+  <title>KeyForge · classic terminal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New', Courier, 'VT323', monospace}
-    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0c0b0a;padding:1.5rem;position:relative}
-    .crt-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center, rgba(20,30,20,0.1) 0%, rgba(0,10,0,0.4) 100%);mix-blend-mode:multiply}
-    .scanline{position:fixed;inset:0;pointer-events:none;z-index:3;background:repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px);animation:scan 8s linear infinite}
-    @keyframes scan{0%{background-position-y:0}100%{background-position-y:100%}}
-    .vignette{position:fixed;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 160px rgba(0,0,0,0.8)}
-    .terminal{position:relative;z-index:10;width:100%;max-width:780px;background:#131210;border-radius:24px 24px 20px 20px;box-shadow:0 24px 60px rgba(0,0,0,0.9),0 0 0 2px #3f4a3a,0 0 0 4px #1e1e1a;padding:0 0 1.8rem 0;border:1px solid #3e4d3a;transition:border 0.1s}
-    .terminal-header{background:#1a1f18;padding:0.9rem 1.8rem;border-radius:22px 22px 0 0;border-bottom:2px solid #364031;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    .terminal-header .led{display:flex;gap:8px;align-items:center}
-    .led-dot{width:12px;height:12px;border-radius:50%;background:#5e6b56;box-shadow:inset 0 1px 3px rgba(0,0,0,0.7)}
-    .led-dot.green{background:#77b35c;box-shadow:0 0 10px #77b35c88, inset 0 1px 2px #b0e090}
-    .led-dot.red{background:#b35c5c;box-shadow:0 0 10px #b35c5c88}
-    .terminal-title{color:#b8c9a8;font-size:1.2rem;letter-spacing:3px;font-weight:400;text-shadow:0 0 6px #6d8a5a;flex:1;text-align:center;font-family:'VT323',monospace;text-transform:uppercase}
-    .terminal-title i{margin-right:10px;color:#8fb07a}
-    .badge-crypto{background:#1f2a1c;color:#b0c8a0;padding:0.2rem 1.2rem;border-radius:40px;font-size:0.8rem;border:1px solid #3a5535;letter-spacing:1px}
-    .terminal-body{padding:1.8rem 2rem 1.2rem}
-    .key-panel{background:#0e130d;border-radius:18px;padding:1.2rem 1.6rem;margin:0.6rem 0 1.8rem;border:1px solid #2f3d2a;box-shadow:inset 0 4px 12px rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:space-between;gap:1.2rem;flex-wrap:wrap}
-    .key-value{font-family:'VT323','Courier New',monospace;font-size:2.4rem;font-weight:400;letter-spacing:3px;color:#d4e8c4;background:#080c06;padding:0.2rem 1.2rem;border-radius:40px;border:1px solid #3b5233;flex:1;min-width:180px;word-break:break-all;cursor:pointer;text-shadow:0 0 12px #7baa6680;transition:all 0.1s}
-    .key-value:hover{background:#121f0e;border-color:#5d8050}
-    .copy-btn{background:#1f2a1a;border:none;color:#c8ddb8;width:54px;height:54px;border-radius:60px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.08s;border:1px solid #3b5233;box-shadow:0 4px 0 #0a1208,0 6px 12px rgba(0,0,0,0.7);flex-shrink:0}
-    .copy-btn:hover{background:#2c3d24;transform:translateY(-2px);border-color:#5d8050}
-    .copy-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0a1208}
-    .copy-btn.copied{background:#1f3a1a;border-color:#6b9a55}
-    .copy-btn.copied i{color:#a8d690}
-    .action-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem 0.6rem;margin-top:0.4rem}
-    .generate-btn{background:#1d2a18;border:none;padding:0.9rem 2.2rem;border-radius:60px;font-weight:400;font-size:1.2rem;color:#d4e8c4;border:1px solid #3d5a33;box-shadow:0 5px 0 #0c150a,0 6px 12px rgba(0,0,0,0.6);cursor:pointer;display:inline-flex;align-items:center;gap:14px;transition:0.1s;font-family:'VT323',monospace;letter-spacing:1.5px}
-    .generate-btn:hover{background:#283f20;transform:translateY(-2px)}
-    .generate-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #0c150a}
-    .generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:0 5px 0 #0c150a}
-    .status-indicator{color:#96a88a;font-size:0.9rem;background:#141f10;padding:0.3rem 1.4rem;border-radius:30px;border:1px solid #2f3d2a;display:flex;align-items:center;gap:10px;font-family:'VT323',monospace;letter-spacing:0.5px}
-    .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
-    .status-dot.online{background:#77b35c;box-shadow:0 0 16px #77b35caa}
-    .status-dot.offline{background:#b35c5c;box-shadow:0 0 16px #b35c5caa}
-    .verify-panel{margin-top:1.8rem;padding-top:1.5rem;border-top:2px solid #2b3825;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center}
-    .verify-panel input{flex:1;min-width:140px;background:#0e130d;border:1px solid #2f3d2a;border-radius:40px;padding:0.7rem 1.4rem;color:#d4e8c4;font-size:1rem;outline:none;font-family:'VT323',monospace;letter-spacing:1.5px}
-    .verify-panel input:focus{border-color:#5d8050;box-shadow:0 0 12px #3d5a3344}
-    .verify-panel input::placeholder{color:#4a6040}
-    .verify-btn{background:#1a2a1a;border:none;padding:0.7rem 2rem;border-radius:40px;color:#b8d8a8;font-weight:400;border:1px solid #2f4a2a;cursor:pointer;transition:0.1s;box-shadow:0 3px 0 #0f1a0f;font-family:'VT323',monospace;font-size:1.1rem;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
-    .verify-btn:hover{background:#264026;transform:translateY(-2px);border-color:#4d7040}
-    .verify-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0f1a0f}
-    .verify-btn.redeem{background:#1a1f2a;border-color:#2a3a4a;box-shadow:0 3px 0 #0e141f}
-    .verify-btn.redeem:hover{background:#27354a;border-color:#3a506a}
-    .result-box{margin-top:1.2rem;padding:0.8rem 1.4rem;border-radius:14px;background:#0e130d;border:1px solid #2b3825;color:#b8c8a8;font-size:1rem;display:none;word-break:break-all;white-space:pre-line;max-height:300px;overflow-y:auto;font-family:'VT323',monospace;letter-spacing:0.5px}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New', Courier, monospace}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#1a1a1a;padding:1.5rem}
+    .term{width:100%;max-width:720px;background:#1e1e1e;border:2px solid #3a3a3a;border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,0.8)}
+    .term-head{background:#2a2a2a;padding:0.7rem 1.2rem;border-bottom:2px solid #3a3a3a;display:flex;align-items:center;gap:12px;border-radius:6px 6px 0 0}
+    .term-head .dot{width:14px;height:14px;border-radius:50%;background:#4a4a4a;display:inline-block}
+    .term-head .dot.red{background:#c05a5a}
+    .term-head .dot.yellow{background:#c0a05a}
+    .term-head .dot.green{background:#5ac05a}
+    .term-head .title{color:#c0c0c0;font-size:1rem;letter-spacing:2px;margin-left:8px;flex:1;text-align:center;font-weight:400}
+    .term-body{padding:1.8rem 1.8rem 1.5rem}
+    .key-area{background:#141414;border:1px solid #333;padding:0.8rem 1.2rem;margin:0.6rem 0 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .key-value{font-family:'Courier New',monospace;font-size:2rem;font-weight:400;color:#d0d0d0;background:#0c0c0c;padding:0.1rem 1rem;border:1px solid #2a2a2a;flex:1;min-width:160px;word-break:break-all;cursor:pointer;letter-spacing:2px}
+    .copy-btn{background:#2a2a2a;border:1px solid #3a3a3a;color:#d0d0d0;width:48px;height:48px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.1s;flex-shrink:0;border-radius:4px}
+    .copy-btn:hover{background:#3a3a3a}
+    .copy-btn.copied{background:#1a3a1a;border-color:#4a6a4a}
+    .copy-btn.copied i{color:#8bc34a}
+    .action-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;margin-top:0.2rem}
+    .gen-btn{background:#2a2a2a;border:1px solid #3a3a3a;padding:0.6rem 1.8rem;color:#d0d0d0;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:0.1s;border-radius:4px;font-weight:400;letter-spacing:1px}
+    .gen-btn:hover{background:#3a3a3a}
+    .gen-btn:disabled{opacity:0.5;cursor:default}
+    .status{color:#909090;font-size:0.85rem;background:#141414;padding:0.2rem 1rem;border:1px solid #2a2a2a;display:flex;align-items:center;gap:8px;border-radius:4px}
+    .status-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+    .status-dot.online{background:#5ac05a}
+    .status-dot.offline{background:#c05a5a}
+    .verify-panel{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid #2a2a2a;display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center}
+    .verify-panel input{flex:1;min-width:140px;background:#141414;border:1px solid #2a2a2a;padding:0.5rem 1rem;color:#d0d0d0;font-size:0.95rem;outline:none;font-family:'Courier New',monospace;border-radius:4px}
+    .verify-panel input:focus{border-color:#4a4a4a}
+    .verify-panel input::placeholder{color:#555}
+    .v-btn{background:#2a2a2a;border:1px solid #3a3a3a;padding:0.5rem 1.6rem;color:#d0d0d0;cursor:pointer;transition:0.1s;border-radius:4px;font-size:0.95rem;display:inline-flex;align-items:center;gap:6px}
+    .v-btn:hover{background:#3a3a3a}
+    .v-btn.redeem{background:#1a1a2a;border-color:#3a3a4a}
+    .v-btn.redeem:hover{background:#2a2a3a}
+    .result-box{margin-top:1rem;padding:0.6rem 1rem;background:#141414;border:1px solid #2a2a2a;color:#c0c0c0;font-size:0.95rem;display:none;word-break:break-all;white-space:pre-line;max-height:260px;overflow-y:auto;border-radius:4px}
     .result-box.visible{display:block}
-    .result-box.valid{border-color:#3a6a2a;background:#132010;color:#b0d89a}
-    .result-box.invalid{border-color:#6a2a2a;background:#1f1010;color:#d8a0a0}
-    .result-box.error{border-color:#6a4a2a;background:#1f1a10;color:#d8b890}
-    .result-box.loading{border-color:#3a4a5a;background:#101a1f;color:#a0b8c8}
-    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1f18;color:#c8ddb8;padding:0.8rem 2.2rem;border-radius:60px;border:1px solid #3b5233;box-shadow:0 8px 30px rgba(0,0,0,0.9);z-index:999;transition:opacity 0.2s,transform 0.15s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:14px;font-family:'VT323',monospace;font-size:1.2rem}
+    .result-box.valid{border-color:#2a5a2a;background:#141f14;color:#8bc34a}
+    .result-box.invalid{border-color:#5a2a2a;background:#1f1414;color:#e57373}
+    .result-box.error{border-color:#5a4a2a;background:#1f1a14;color:#e5a373}
+    .result-box.loading{border-color:#3a4a5a;background:#141a1f;color:#aab0d0}
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1e1e1e;color:#d0d0d0;padding:0.6rem 1.8rem;border:1px solid #3a3a3a;border-radius:4px;z-index:999;transition:opacity 0.2s;opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px;font-size:1rem}
     .toast.show{opacity:1;pointer-events:auto}
-    .debug-foot{font-size:0.65rem;color:#4a5a42;margin-top:12px;padding:6px 12px;background:#0a0f08;border-radius:8px;font-family:'Courier New',monospace;word-break:break-all;border:1px solid #1f2a1a;text-align:center}
-    @media(max-width:600px){.terminal-body{padding:1.2rem 1rem}.key-value{font-size:1.8rem}.copy-btn{width:46px;height:46px;font-size:1.2rem}.generate-btn{padding:0.6rem 1.4rem;font-size:1rem}}
+    .foot{font-size:0.65rem;color:#4a4a4a;margin-top:12px;padding:4px 8px;background:#0c0c0c;border-radius:4px;text-align:center;border:1px solid #1a1a1a}
+    @media(max-width:600px){.term-body{padding:1.2rem 1rem}.key-value{font-size:1.5rem}.copy-btn{width:42px;height:42px}}
   </style>
 </head>
 <body>
-  <div class="crt-overlay"></div>
-  <div class="scanline"></div>
-  <div class="vignette"></div>
-
-  <div class="terminal">
-    <div class="terminal-header">
-      <div class="led">
-        <span class="led-dot green"></span>
-        <span class="led-dot" style="background:#5e6b56;"></span>
-        <span class="led-dot red"></span>
-      </div>
-      <div class="terminal-title"><i class="fas fa-terminal"></i> keyforge :: secure vault</div>
-      <span class="badge-crypto"><i class="fas fa-lock" style="margin-right:6px;"></i> 24h</span>
+  <div class="term">
+    <div class="term-head">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="title"><i class="fas fa-key" style="margin-right:8px;"></i>KEYFORGE :: SECUREVAULT</span>
+      <span style="color:#606060;font-size:0.8rem;border:1px solid #3a3a3a;padding:0.1rem 0.8rem;border-radius:4px;">24h</span>
     </div>
-
-    <div class="terminal-body">
-      <div class="key-panel">
+    <div class="term-body">
+      <div class="key-area">
         <span class="key-value" id="keyDisplay">··········</span>
-        <button class="copy-btn" id="copyBtn" aria-label="copy"><i class="fas fa-copy"></i></button>
+        <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i></button>
       </div>
-
       <div class="action-row">
-        <button class="generate-btn" id="generateBtn"><i class="fas fa-sync-alt"></i> generate</button>
-        <span class="status-indicator">
+        <button class="gen-btn" id="generateBtn"><i class="fas fa-sync-alt"></i> generate</button>
+        <span class="status">
           <span class="status-dot offline" id="statusDot"></span>
           <span id="statusText">connecting</span>
         </span>
       </div>
-
       <div class="verify-panel">
         <input type="text" id="verifyInput" placeholder="paste key..." spellcheck="false" />
-        <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> verify</button>
-        <button class="verify-btn redeem" id="redeemBtn"><i class="fas fa-link"></i> redeem</button>
+        <button class="v-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> verify</button>
+        <button class="v-btn redeem" id="redeemBtn"><i class="fas fa-link"></i> redeem</button>
       </div>
       <div class="result-box" id="resultBox"></div>
-      <div class="debug-foot" id="debugFoot">🔒 secure channel · RSA-2048</div>
+      <div class="foot" id="foot">🔒 secure channel · rsa-2048</div>
     </div>
   </div>
-
   <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">copied</span></div>
-
   <script>
     (function(){
       var API_BASE = 'https://my-discord-bot-weathered-cherry-6777-production.up.railway.app';
@@ -117,7 +96,7 @@
       var resultBox = document.getElementById('resultBox');
       var statusDot = document.getElementById('statusDot');
       var statusText = document.getElementById('statusText');
-      var debugFoot = document.getElementById('debugFoot');
+      var foot = document.getElementById('foot');
       var currentKey = '';
 
       function showResult(msg, type) {
@@ -133,7 +112,7 @@
       function showToast(msg, isError) {
         toastMsg.textContent = msg;
         toastIcon.className = isError ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
-        toastIcon.style.color = isError ? '#d8a0a0' : '#b0d89a';
+        toastIcon.style.color = isError ? '#e57373' : '#8bc34a';
         toast.classList.add('show');
         clearTimeout(toast._timer);
         toast._timer = setTimeout(function(){ toast.classList.remove('show'); }, 3600);
@@ -142,8 +121,8 @@
       function updateStatus(online, msg) {
         statusDot.className = 'status-dot ' + (online ? 'online' : 'offline');
         statusText.textContent = msg || (online ? 'online' : 'offline');
-        statusText.style.color = online ? '#b0d89a' : '#d8a0a0';
-        debugFoot.textContent = online ? '🔒 secure · ' + API_BASE.replace(/^https?:\/\//,'') : '⚠️ offline · retry';
+        statusText.style.color = online ? '#8bc34a' : '#e57373';
+        foot.textContent = online ? '🔒 secure' : '⚠️ offline';
       }
 
       function copyKey() {
@@ -165,14 +144,14 @@
       async function generateKey() {
         generateBtn.disabled = true;
         generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> generating';
-        showResult('⏳ generating secure key...', 'loading');
+        showResult('generating key...', 'loading');
         try {
           var res = await fetch(API_BASE + '/generatekey?hours=24', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           });
           if (!res.ok) {
-            if (res.status === 403) throw new Error('access denied (CORS)');
+            if (res.status === 403) throw new Error('access denied');
             if (res.status === 404) throw new Error('endpoint missing');
             throw new Error('server error ' + res.status);
           }
@@ -181,13 +160,13 @@
           currentKey = data.key;
           keyDisplay.textContent = currentKey;
           var expires = new Date(data.expires_at);
-          showResult('✅ key generated\n\n' + data.key + '\nexpires: ' + expires.toLocaleString(), 'valid');
+          showResult('key generated\n\n' + data.key + '\nexpires: ' + expires.toLocaleString(), 'valid');
           showToast('key generated');
           updateStatus(true, 'online');
         } catch (err) {
-          showResult('❌ ' + err.message, 'error');
+          showResult('error: ' + err.message, 'error');
           showToast('error: ' + err.message, true);
-          keyDisplay.textContent = '⚠️ error';
+          keyDisplay.textContent = 'error';
           updateStatus(false, 'error');
         }
         generateBtn.disabled = false;
@@ -202,7 +181,7 @@
             body: JSON.stringify({ key: key.trim() })
           });
           if (!res.ok) {
-            if (res.status === 403) throw new Error('CORS block (POST)');
+            if (res.status === 403) throw new Error('cors block');
             if (res.status === 404) throw new Error('endpoint not found');
             throw new Error('server error ' + res.status);
           }
@@ -214,7 +193,7 @@
 
       async function redeemKey(key) {
         try {
-          var userId = prompt('Discord user ID:');
+          var userId = prompt('discord user id:');
           if (!userId) return { success: false, reason: 'cancelled' };
           var res = await fetch(API_BASE + '/redeemkey', {
             method: 'POST',
@@ -222,7 +201,7 @@
             body: JSON.stringify({ key: key.trim(), discord_user_id: userId.trim() })
           });
           if (!res.ok) {
-            if (res.status === 403) throw new Error('CORS block (POST)');
+            if (res.status === 403) throw new Error('cors block');
             if (res.status === 404) throw new Error('endpoint not found');
             throw new Error('server error ' + res.status);
           }
@@ -239,37 +218,37 @@
       verifyBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
         if (!key) { showResult('enter a key to verify', 'error'); return; }
-        showResult('⏳ verifying ...', 'loading');
+        showResult('verifying...', 'loading');
         var result = await verifyKey(key);
         if (result.valid) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult('✅ valid key\n\n' + key + '\nexpires: ' + expires.toLocaleString() + '\ncreator: ' + (result.keyData.createdBy || 'system'), 'valid');
+          showResult('valid key\n\n' + key + '\nexpires: ' + expires.toLocaleString() + '\ncreator: ' + (result.keyData.createdBy || 'system'), 'valid');
           showToast('key valid');
           updateStatus(true, 'online');
         } else {
-          showResult('❌ ' + result.reason + '\n\n(cors? check bot headers)', 'invalid');
+          showResult('invalid: ' + result.reason, 'invalid');
           showToast('invalid: ' + result.reason, true);
-          if (result.reason.includes('CORS')) updateStatus(false, 'cors error');
+          if (result.reason.includes('cors')) updateStatus(false, 'cors error');
         }
       });
 
       redeemBtn.addEventListener('click', async function(){
         var key = verifyInput.value.trim();
         if (!key) { showResult('enter key to redeem', 'error'); return; }
-        showResult('⏳ redeeming ...', 'loading');
+        showResult('redeeming...', 'loading');
         var result = await redeemKey(key);
         if (result.success) {
           var expires = new Date(result.keyData.expiresAt);
-          showResult('✅ redeemed\n\n' + key + '\nlocked to your account\nexpires: ' + expires.toLocaleString(), 'valid');
+          showResult('redeemed\n\n' + key + '\nlocked to your account\nexpires: ' + expires.toLocaleString(), 'valid');
           currentKey = key;
           keyDisplay.textContent = key;
-          showToast('redeemed!');
+          showToast('redeemed');
           updateStatus(true, 'online');
           setTimeout(copyKey, 400);
         } else {
-          showResult('❌ ' + result.reason + '\n\n(cors? check bot headers)', 'invalid');
+          showResult('redeem fail: ' + result.reason, 'invalid');
           showToast('redeem fail: ' + result.reason, true);
-          if (result.reason.includes('CORS')) updateStatus(false, 'cors error');
+          if (result.reason.includes('cors')) updateStatus(false, 'cors error');
         }
       });
 
@@ -281,17 +260,16 @@
           var res = await fetch(API_BASE + '/health', { method: 'GET', signal: AbortSignal.timeout(5000) });
           if (res.ok) {
             updateStatus(true, 'online');
-            showResult('✅ connected to vault\n\nGET works. if verify/redeem fail, bot needs CORS for POST.', 'valid');
+            showResult('connected to vault\n\nGET works. if verify/redeem fail, bot needs CORS for POST.', 'valid');
             setTimeout(function(){ if (resultBox.classList.contains('visible')) resultBox.classList.remove('visible'); }, 4800);
           } else {
             updateStatus(false, 'error ' + res.status);
           }
         } catch (err) {
           updateStatus(false, 'offline');
-          showResult('⚠️ cannot reach vault\n\n' + API_BASE + '\n' + err.message, 'error');
+          showResult('cannot reach vault\n\n' + API_BASE + '\n' + err.message, 'error');
         }
       }
-
       testConnection();
     })();
   </script>
