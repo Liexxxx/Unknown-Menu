@@ -6,45 +6,41 @@
   <title>Unknown · Menu</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,'Helvetica Neue',sans-serif}
-    body{background:#0d0d0d;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
-    .menu-container{width:100%;max-width:1000px;background:#1a1a1a;border:1px solid #2d2d2d;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.9);overflow:hidden}
-    .menu-header{background:#121212;padding:1.2rem 2rem;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem 1.5rem}
-    .menu-header .logo{color:#e0e0e0;font-size:1.4rem;font-weight:600;letter-spacing:1px;display:flex;align-items:center;gap:12px}
-    .menu-header .logo i{color:#6a8aff;font-size:1.6rem}
-    .menu-header .badge{background:#222;color:#aaa;padding:0.2rem 1.2rem;border-radius:20px;font-size:0.75rem;border:1px solid #333;letter-spacing:0.5px}
-    .menu-body{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:2rem 2rem 1.8rem}
-    @media(max-width:700px){.menu-body{grid-template-columns:1fr}}
-    .category{background:#141414;border:1px solid #282828;border-radius:10px;overflow:hidden}
-    .category-head{background:#1e1e1e;padding:0.7rem 1.2rem;border-bottom:1px solid #2a2a2a;color:#d0d0d0;font-weight:600;font-size:0.95rem;display:flex;align-items:center;gap:10px;letter-spacing:0.5px}
-    .category-head i{color:#6a8aff;width:20px}
-    .feature-list{list-style:none;padding:0.3rem 0}
-    .feature-list li{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 1.2rem;border-bottom:1px solid #1e1e1e;color:#b0b0b0;font-size:0.9rem;transition:background 0.1s}
-    .feature-list li:hover{background:#1a1a1a}
-    .feature-list li:last-child{border-bottom:none}
-    .feature-list .toggle{width:36px;height:20px;background:#2a2a2a;border-radius:12px;position:relative;cursor:pointer;transition:0.15s;flex-shrink:0;border:1px solid #3a3a3a}
-    .feature-list .toggle.active{background:#2a4a6a;border-color:#4a7aaa}
-    .feature-list .toggle .knob{width:16px;height:16px;background:#555;border-radius:50%;position:absolute;top:1px;left:1px;transition:0.15s}
-    .feature-list .toggle.active .knob{background:#8ab4ff;left:17px}
-    .feature-list .slider-group{display:flex;align-items:center;gap:10px;flex:1;margin-left:12px}
-    .feature-list .slider-group input[type="range"]{flex:1;min-width:60px;height:4px;background:#2a2a2a;border-radius:2px;appearance:none;outline:none}
-    .feature-list .slider-group input[type="range"]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;background:#4a6a8a;border-radius:50%;cursor:pointer;border:1px solid #5a7a9a}
-    .feature-list .slider-value{color:#888;font-size:0.75rem;min-width:28px;text-align:right}
-    .feature-list .label-group{display:flex;align-items:center;gap:8px;flex:1}
-    .feature-list .label-group i{color:#555;width:18px;font-size:0.85rem}
-    .feature-list .sub-item{padding-left:2.2rem;border-left:2px solid #2a2a2a;margin-left:0.8rem}
-    .feature-list .sub-item .label-group i{color:#444}
-    .menu-footer{background:#111;padding:0.8rem 2rem;border-top:1px solid #222;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem 1rem}
-    .menu-footer .status{color:#6a8aff;font-size:0.8rem;display:flex;align-items:center;gap:6px}
-    .menu-footer .status .dot{width:8px;height:8px;border-radius:50%;background:#6a8aff;display:inline-block;animation:pulse 1.5s infinite}
-    @keyframes pulse{0%{opacity:0.4}50%{opacity:1}100%{opacity:0.4}}
-    .menu-footer .info{color:#555;font-size:0.7rem;letter-spacing:0.3px}
-    .key-display{background:#0e0e0e;border:1px solid #222;border-radius:8px;padding:0.6rem 1.2rem;margin:0 0 1.2rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-    .key-display .key{font-family:'Courier New',monospace;font-size:1.5rem;color:#d0d0d0;letter-spacing:2px;background:#0a0a0a;padding:0.1rem 1rem;border:1px solid #2a2a2a;border-radius:4px;flex:1;min-width:160px;word-break:break-all}
-    .key-display .copy-btn{background:#222;border:1px solid #333;color:#ccc;padding:0.3rem 1.2rem;border-radius:4px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:8px;transition:0.1s}
-    .key-display .copy-btn:hover{background:#2a2a2a}
-    .key-display .gen-btn{background:#1a2a3a;border:1px solid #2a4a6a;color:#b0d0ff;padding:0.3rem 1.4rem;border-radius:4px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:8px;transition:0.1s}
-    .key-display .gen-btn:hover{background:#223a4a}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+    body{background:#0a0a0a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+    .menu-container{width:100%;max-width:1100px;background:#141414;border-radius:16px;border:1px solid #282828;box-shadow:0 24px 80px rgba(0,0,0,0.9);overflow:hidden}
+    .menu-header{background:#0e0e0e;padding:1.2rem 2rem;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem 1.5rem}
+    .menu-header .logo{color:#e8e8e8;font-size:1.5rem;font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;gap:14px}
+    .menu-header .logo i{color:#6a8aff;font-size:1.7rem}
+    .menu-header .badge{background:#1a1a1a;color:#888;padding:0.2rem 1.2rem;border-radius:20px;font-size:0.7rem;border:1px solid #2a2a2a;letter-spacing:0.5px}
+    .menu-header .badge.primary{background:#1a2a3a;border-color:#2a4a5a;color:#8ab4ff}
+    .key-row{background:#101010;padding:0.8rem 2rem;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem 1rem}
+    .key-row .key{font-family:'Courier New',monospace;font-size:1.4rem;color:#d0d0d0;letter-spacing:2px;background:#0a0a0a;padding:0.1rem 1.2rem;border:1px solid #282828;border-radius:6px;flex:1;min-width:160px;word-break:break-all}
+    .key-row .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .key-row .actions button{background:#1a1a1a;border:1px solid #2a2a2a;color:#c0c0c0;padding:0.3rem 1.2rem;border-radius:6px;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;gap:8px;transition:0.1s}
+    .key-row .actions button:hover{background:#2a2a2a;border-color:#3a3a3a}
+    .key-row .actions button.gen{background:#1a2a3a;border-color:#2a4a6a;color:#8ab4ff}
+    .key-row .actions button.gen:hover{background:#223a4a}
+    .menu-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;padding:2rem 2rem 1.8rem}
+    @media(max-width:900px){.menu-body{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.menu-body{grid-template-columns:1fr}}
+    .category{background:#101010;border:1px solid #222;border-radius:12px;overflow:hidden}
+    .category-head{background:#181818;padding:0.7rem 1.2rem;border-bottom:1px solid #262626;color:#d0d0d0;font-weight:600;font-size:0.9rem;display:flex;align-items:center;gap:10px;letter-spacing:0.3px}
+    .category-head i{color:#6a8aff;width:20px;font-size:1rem}
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;padding:0.8rem}
+    .feature-item{background:#0c0c0c;border:1px solid #1e1e1e;border-radius:8px;padding:0.5rem 0.8rem;display:flex;align-items:center;gap:10px;transition:0.1s}
+    .feature-item:hover{background:#141414;border-color:#2a2a2a}
+    .feature-item .icon{color:#4a4a4a;font-size:0.85rem;width:20px;text-align:center}
+    .feature-item .name{color:#b0b0b0;font-size:0.8rem;font-weight:400;letter-spacing:0.2px}
+    .feature-item .value{color:#6a8aff;font-size:0.7rem;margin-left:auto;background:#1a1a2a;padding:0.05rem 0.6rem;border-radius:12px;border:1px solid #2a3a4a}
+    .feature-item .value.off{color:#555;background:#141414;border-color:#222}
+    .feature-item.full{grid-column:1/3}
+    .feature-item .sub{font-size:0.65rem;color:#666;margin-left:6px}
+    .menu-footer{background:#0e0e0e;padding:0.7rem 2rem;border-top:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem 1rem}
+    .menu-footer .status{color:#6a8aff;font-size:0.8rem;display:flex;align-items:center;gap:8px}
+    .menu-footer .status .dot{width:8px;height:8px;border-radius:50%;background:#6a8aff;display:inline-block;animation:pulse 1.8s infinite}
+    @keyframes pulse{0%{opacity:0.3}50%{opacity:1}100%{opacity:0.3}}
+    .menu-footer .info{color:#444;font-size:0.7rem;letter-spacing:0.3px}
     .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#e0e0e0;padding:0.6rem 1.8rem;border:1px solid #333;border-radius:8px;z-index:999;opacity:0;pointer-events:none;transition:opacity 0.2s;display:flex;align-items:center;gap:12px;font-size:0.9rem}
     .toast.show{opacity:1;pointer-events:auto}
   </style>
@@ -53,9 +49,17 @@
   <div class="menu-container">
     <div class="menu-header">
       <div class="logo"><i class="fas fa-shield-halved"></i> Unknown</div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <span class="badge"><i class="far fa-clock" style="margin-right:4px;"></i> 24h session</span>
-        <span class="badge" style="background:#1a2a3a;border-color:#2a4a5a;color:#8ab4ff">v2.1.0</span>
+        <span class="badge primary">v2.1.0</span>
+      </div>
+    </div>
+
+    <div class="key-row">
+      <span class="key" id="keyDisplay">••••••••••</span>
+      <div class="actions">
+        <button class="gen" id="generateBtn"><i class="fas fa-sync-alt"></i> generate</button>
+        <button id="copyBtn"><i class="fas fa-copy"></i> copy</button>
       </div>
     </div>
 
@@ -63,67 +67,51 @@
       <!-- SAFETY -->
       <div class="category">
         <div class="category-head"><i class="fas fa-shield"></i> Safety</div>
-        <ul class="feature-list">
-          <li><span class="label-group"><i class="fas fa-eye-slash"></i> FPS Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-globe"></i> Platform Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-microphone"></i> Microphone Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-user-secret"></i> Player Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-gavel"></i> Anti Moderator</span><span class="toggle"><span class="knob"></span></span></li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="icon"><i class="fas fa-eye-slash"></i></span><span class="name">FPS Spoof</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-globe"></i></span><span class="name">Platform Spoof</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-microphone"></i></span><span class="name">Microphone Spoof</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-user-secret"></i></span><span class="name">Player Spoof</span><span class="value">on</span></div>
+          <div class="feature-item full"><span class="icon"><i class="fas fa-gavel"></i></span><span class="name">Anti Moderator</span><span class="value">active</span></div>
+        </div>
       </div>
 
       <!-- MOVEMENT -->
       <div class="category">
         <div class="category-head"><i class="fas fa-arrows-alt"></i> Movement</div>
-        <ul class="feature-list">
-          <li><span class="label-group"><i class="fas fa-arrows-up-down"></i> Long Arms</span><span class="toggle"><span class="knob"></span></span></li>
-          <li class="sub-item"><span class="slider-group"><span style="font-size:0.8rem;color:#888;">Amount</span><input type="range" min="0" max="100" value="65" /><span class="slider-value">65</span></span></li>
-          <li><span class="label-group"><i class="fas fa-forward"></i> Speed Boost</span><span class="toggle"><span class="knob"></span></span></li>
-          <li class="sub-item"><span class="slider-group"><span style="font-size:0.8rem;color:#888;">Amount</span><input type="range" min="0" max="100" value="80" /><span class="slider-value">80</span></span></li>
-          <li><span class="label-group"><i class="fas fa-hand-paper"></i> Pull</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-keyboard"></i> WASD</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-rotate"></i> Predicate Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li class="sub-item"><span class="slider-group"><span style="font-size:0.8rem;color:#888;">Amount</span><input type="range" min="0" max="100" value="40" /><span class="slider-value">40</span></span></li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="icon"><i class="fas fa-arrows-up-down"></i></span><span class="name">Long Arms</span><span class="value">65%</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-forward"></i></span><span class="name">Speed Boost</span><span class="value">80%</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-hand-paper"></i></span><span class="name">Pull</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-keyboard"></i></span><span class="name">WASD</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-rotate"></i></span><span class="name">Predicate Spoof</span><span class="value">40%</span></div>
+        </div>
       </div>
 
       <!-- VISUALS -->
       <div class="category">
         <div class="category-head"><i class="fas fa-eye"></i> Visuals</div>
-        <ul class="feature-list">
-          <li><span class="label-group"><i class="fas fa-user"></i> Player Board</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-arrows-rotate"></i> TPC to FPC</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-desktop"></i> Show Player Platforms</span><span class="toggle"><span class="knob"></span></span></li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="icon"><i class="fas fa-user"></i></span><span class="name">Player Board</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-arrows-rotate"></i></span><span class="name">TPC to FPC</span><span class="value">on</span></div>
+          <div class="feature-item full"><span class="icon"><i class="fas fa-desktop"></i></span><span class="name">Show Player Platforms</span><span class="value">on</span></div>
+        </div>
       </div>
 
       <!-- ADVANTAGE -->
       <div class="category">
         <div class="category-head"><i class="fas fa-bolt"></i> Advantage</div>
-        <ul class="feature-list">
-          <li><span class="label-group"><i class="fas fa-expand"></i> Big HitBox</span><span class="toggle"><span class="knob"></span></span></li>
-          <li><span class="label-group"><i class="fas fa-person-walking"></i> WallWalk</span><span class="toggle"><span class="knob"></span></span></li>
-          <li class="sub-item"><span class="slider-group"><span style="font-size:0.8rem;color:#888;">Strength</span><input type="range" min="0" max="100" value="55" /><span class="slider-value">55</span></span></li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="icon"><i class="fas fa-expand"></i></span><span class="name">Big HitBox</span><span class="value">on</span></div>
+          <div class="feature-item"><span class="icon"><i class="fas fa-person-walking"></i></span><span class="name">WallWalk</span><span class="value">55%</span></div>
+        </div>
       </div>
 
       <!-- NETWORK -->
-      <div class="category" style="grid-column:1/2">
+      <div class="category">
         <div class="category-head"><i class="fas fa-wifi"></i> Network</div>
-        <ul class="feature-list">
-          <li><span class="label-group"><i class="fas fa-clock"></i> Latency Spoof</span><span class="toggle"><span class="knob"></span></span></li>
-          <li class="sub-item"><span class="slider-group"><span style="font-size:0.8rem;color:#888;">Amount</span><input type="range" min="0" max="300" value="120" step="5" /><span class="slider-value">120ms</span></span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- KEY ROW -->
-    <div style="padding:0 2rem 0.5rem">
-      <div class="key-display">
-        <span class="key" id="keyDisplay">••••••••••</span>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="gen-btn" id="generateBtn"><i class="fas fa-sync-alt"></i> generate</button>
-          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> copy</button>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="icon"><i class="fas fa-clock"></i></span><span class="name">Latency Spoof</span><span class="value">120ms</span></div>
         </div>
       </div>
     </div>
@@ -194,26 +182,6 @@
       copyBtn.addEventListener('click', copyKey);
       keyDisplay.addEventListener('click', copyKey);
 
-      // toggle switches
-      document.querySelectorAll('.toggle').forEach(function(toggle){
-        toggle.addEventListener('click', function(e){
-          e.stopPropagation();
-          this.classList.toggle('active');
-        });
-      });
-
-      // sliders
-      document.querySelectorAll('.slider-group input[type="range"]').forEach(function(slider){
-        var valDisplay = slider.parentElement.querySelector('.slider-value');
-        if (valDisplay) {
-          slider.addEventListener('input', function(){
-            var suffix = this.parentElement.querySelector('span:first-child')?.textContent?.includes('ms') ? 'ms' : '';
-            valDisplay.textContent = this.value + suffix;
-          });
-        }
-      });
-
-      // health check
       async function checkHealth() {
         try {
           var res = await fetch(API_BASE + '/health', { method: 'GET', signal: AbortSignal.timeout(3000) });
